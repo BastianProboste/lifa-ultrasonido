@@ -1,0 +1,8 @@
+# En esta carpeta estan los driver para que la biblioteca de python pyvisa funcione correctamente
+# permite la comunicación y control de instrumentos de medición y automatización (como osciloscopios, multímetros y generadores de funciones) 
+# desde un ordenador, Esta API facilita la conexión a estos dispositivos usando diversos protocolos de comunicación
+# - Es necesario tener instalado este driver, para usar este codigo
+
+# Este directorio contiene 
+# - Un txt de con el link de la fuente de la descarga
+#      - Para realizar la descarga, te debes registrar, la descarga es gratis y no tiene mayor complejidad mas que el registro.
