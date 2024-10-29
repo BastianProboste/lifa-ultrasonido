@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+<main role="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11" style="position: absolute; top: 35%; left: 15%; width: 50%; height: 70%;">
+                <div class="col-12" style="margin-bottom: 25px;"></div>
+                <a href="{% url 'list_ensayo_active' %}" class="button form-control">Listado de ensayos Activos</a>
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+
+{% block extrahead %}
+{% endblock %}

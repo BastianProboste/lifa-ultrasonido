@@ -1,0 +1,169 @@
+/* Estilo general del cuerpo */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #1f43ab, #091359); /* Degradado azul claro */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Contenedor principal de dos columnas */
+.container {
+    display: flex;
+    width: 80%;
+    max-width: 1200px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    flex-wrap: wrap; /* Permite que las columnas se ajusten en pantallas más pequeñas */
+}
+
+.left-column {
+    flex: 1;
+    background-size: cover;
+    position: relative;
+}
+
+.left-column::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 50, 0.5); 
+}
+
+.left-column h1 {
+    position: relative;
+    font-size: 4rem;
+    text-align: center;
+    margin-top: 170px;
+    color: white;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+#custom-left-column{
+    margin-top: 20%;
+}
+
+/* Estilo de la columna derecha (login) */
+.right-column {
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco translúcido */
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right-column form {
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+legend {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #1f2f98; /* Azul oscuro */
+}
+
+label {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+input[type="password"] {
+    margin-bottom: 10px;
+}
+
+a {
+    text-align: right;
+    color: #1e90ff;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    background-color: #1e90ff;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #4169e1;
+}
+
+.submit {
+    margin-top: 20px;
+}
+
+fieldset {
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; 
+    }
+
+    .left-column {
+        order: 1; 
+        flex: none; 
+        height: 90px; 
+    }
+
+    .right-column {
+        order: 2; 
+        padding: 20px; 
+    }
+
+    .left-column h1 {
+        font-size: 2.5rem;
+        margin-top: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .left-column h1 {
+        font-size: 2rem; 
+    }
+
+    legend {
+        font-size: 1.2rem; 
+    }
+
+    button {
+        font-size: 0.9rem; 
+    }
+
+    input {
+        padding: 8px;
+    }
+}
