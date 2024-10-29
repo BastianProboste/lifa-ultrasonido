@@ -1,0 +1,148 @@
+{% extends 'core/modules2.html' %}
+
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+{% block extrahead %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmarCambio(url) {
+        Swal.fire({
+            title: "¿Está seguro de que desea realizar esta acción?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sí, confirmar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirigir a la URL si se confirma
+                window.location.href = url;
+            }
+        });
+    }
+</script>
+<script>
+    function redirectTo(url) {
+        window.location.href = url;
+    }
+</script>
+{% endblock %}
+
+<header class='mb-5'>
+    <div class="row">
+        <div class="titu-mein" >        
+            <h2 class='h2 medium text-blue'>Listado de ensayos</h2>
+        </div>
+    </div>
+
+
+
+
+</header>
+<div class="container">
+    <form method="post" action="" class="d-flex align-items-center justify-content-between w-100 flex-wrap">
+        {% csrf_token %}
+        <div class="mb-3 flex-grow-1 me-2">
+            <input class="form-control" type="search" placeholder="Search" aria-label="Search" value="{{ search }}" />
+        </div>
+        
+        <div class="mb-3 me-2">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </div>
+        
+        <div class="mb-3">
+            <a class="btn btn-primary" href="{% url 'list_ensayo_active' %}" role="button">Ensayos Activos</a>
+        </div>
+
+    </form>
+    
+</div>
+
+
+
+<div class="col-md-11 cont-table" >
+    <table class="table100 ver1">
+        <thead class="estilo-table">
+            <tr>
+                <th width="1%" scope="col">Codigo</th>
+                <th width="1%" scope="col">Nombre</th>
+                <th width="1%" scope="col">Fecha</th>
+                <th width="1%" scope="col">Acciones</th>
+            </tr>
+        </thead>    
+        <tbody>
+            {% for ensayo in ensayo_list %}
+                <tr >
+                    <td class="user-data"> {{ ensayo.codigo_ensayo }}</td>
+                    <td class="user-data"> {{ ensayo.nombre_ensayo }}</td>
+                    <td class="user-data"> {{ ensayo.fecha_ensayo }}</td>
+                    
+                    <td class="all-lightgray">
+                        <a href="{% url 'list_tiempos_ensayo' ensayo.id %}" title="Tiempos" class="user-action">
+                            <i class="fa-solid fa-eye"></i> 
+                        </a>
+                        &nbsp;
+                        <a href="#" onclick="confirmarCambio('{% url 'ensayo_activate' ensayo.id %}')" title="Desactivar" class="user-action">
+                            <i class="fas fa-ban"></i>
+                        </a>
+                    </td>
+
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+<!-- Paginación -->
+{% if ensayo_list.paginator.num_pages > 1 %}
+    <div class="d-flex">
+        <nav aria-label="Page navigation example" class="ms-auto">
+            <ul class="pagination pagination-table">
+                {% if ensayo_list.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ ensayo_list.previous_page_number }}&search={{ search }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                    </li>                        
+                {% endif %}
+                {% for i in ensayo_list.paginator.page_range %}
+                    {% if i >= ensayo_list.number|sub:2  and i < ensayo_list.number|add:3  %}
+                        <li class="page-item {% if ensayo_list.number == i %}active{% endif %}">
+                            <a class="page-link" href="?page={{ i }}&search={{ search }}">{{ i }}</a>
+                        </li>                        
+                    {% endif %}
+                {% endfor %}
+                {% if ensayo_list.has_next %}
+                    <li class="page-item ">
+                        <a class="page-link" href="?page={{ ensayo_list.next_page_number }}&search={{ search }}">&raquo;</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+    {% block scripts %}
+    {% if messages %}
+    <script>
+        {% for message in messages %}
+        Swal.fire({
+            position: 'medium',
+            icon: '{{ message.tags }}',
+            title: '{{ message }}',
+            showConfirmButton: true,
+        });
+        {% endfor %}
+    </script>
+    {% endif %}
+    {% endblock %}
+    {% endblock %}
