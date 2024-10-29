@@ -8,7 +8,7 @@ def bienvenida():
     print("*************************************")
     print("\nEste sistema permitirá medir cambios microestructurales\n"
           "en materiales sometidos a tracción mediante tecnología\n"
-          "de ultrasonido y análisis avanzado.\n")
+          "de ultrasonido.\n")
 
 if __name__ == '__main__':
     bienvenida()
