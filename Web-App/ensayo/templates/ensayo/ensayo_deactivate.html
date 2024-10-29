@@ -1,0 +1,25 @@
+{% extends 'core/base_admin.html' %}
+{% load static %}
+
+{% block content %}
+{% block extrahead %}
+
+{% endblock %}
+    <main role="main">
+        <div class="container col-12 mt-3">
+            <div class="col-12  mt-3">
+                <h3>Nuevo Producto</h3> 
+                <form method="post" action="{% url 'ensayo_deactivate' category_data.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ category_data.id }}" name="category_id" id="category_id">
+                    <div class="row"> 
+                        <div class="col-12 col-sm-8 mb-3">
+                            <label for="text">Nombre Categoria</label>
+                            <a href="{% url 'inventario_main' %}" class="button button--gray form-control">Volver</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+{% endblock %}
