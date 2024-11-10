@@ -1,4 +1,4 @@
-{% extends 'core/base_admin.html' %}
+{% extends 'core/module.html' %}
 {% load static %}
 
 {% block content %}
@@ -14,7 +14,7 @@
                 <a href="{% url 'list_ensayo_active' %}" class="button button--gray form-control custom-button" title="Volver a Lista">Volver</a>
             </div>  
         </div>
-        <div class="container col-12 mt-3">
+        <div class="container">
             <div class="col-12  mt-3">
                 <form method="post" action="{% url 'ensayo_edit' ensayo_data.id %}">
                     {% csrf_token %}

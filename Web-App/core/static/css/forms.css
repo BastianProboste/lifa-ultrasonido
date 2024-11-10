@@ -1,0 +1,105 @@
+.container {
+    max-width: 1200px;
+    margin: 150px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h3 {
+    font-size: 2rem; 
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #2e75c2;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+fieldset {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+form label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.3rem;
+}
+
+form input,
+form select {
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus,
+form select:focus {
+    outline: none;
+    border-color: #2e75c2;
+}
+
+/* estilos botones */
+button,
+a.btn-back {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button {
+    background-color: #2e75c2;
+    color: #fff;
+}
+
+button:hover {
+    background-color: #235a9e;
+}
+
+a.btn-back {
+    display: inline-block;
+    text-align: center;
+    background-color: #6c757d;
+    color: #fff;
+    text-decoration: none;
+}
+
+a.btn-back:hover {
+    background-color: #565e64;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    fieldset {
+        grid-template-columns: 1fr; /* Hace que los campos se apilen verticalmente */
+    }
+
+    .form-actions {
+        flex-direction: column; /* Alinea los botones verticalmente */
+    }
+}

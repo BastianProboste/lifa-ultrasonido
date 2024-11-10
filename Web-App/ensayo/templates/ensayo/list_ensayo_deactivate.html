@@ -1,4 +1,4 @@
-{% extends 'core/modules2.html' %}
+{% extends 'core/module.html' %}
 
 {% load static %}
 {% load mathfilters %}
@@ -62,10 +62,10 @@
 
 
 
-<div class="col-md-11 cont-table" >
-    <table class="table100 ver1">
-        <thead class="estilo-table">
-            <tr>
+<div class="table-container" >
+    <table class="table">
+        <thead >
+            <tr class="table-header">
                 <th width="1%" scope="col">Codigo</th>
                 <th width="1%" scope="col">Nombre</th>
                 <th width="1%" scope="col">Fecha</th>
@@ -84,7 +84,7 @@
                             <i class="fa-solid fa-eye"></i> 
                         </a>
                         &nbsp;
-                        <a href="#" onclick="confirmarCambio('{% url 'ensayo_activate' ensayo.id %}')" title="Desactivar" class="user-action">
+                        <a href="#" onclick="confirmarCambio('{% url 'ensayo_activate' ensayo.id %}')" title="Activar" class="user-action">
                             <i class="fas fa-ban"></i>
                         </a>
                     </td>

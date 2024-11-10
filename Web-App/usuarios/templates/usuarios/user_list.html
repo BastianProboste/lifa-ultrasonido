@@ -1,0 +1,146 @@
+{% extends 'core/module.html' %}
+{% load static %}
+{% block title %}Modulo Usuario{% endblock %}
+{% block active_users %}active{% endblock %}
+{% block h2 %}Modulo de usuarios > Lista de usuarios{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<h1 class="title">Lista de Usuarios</h1>
+<div class="search-bar-container">
+    <form method="get" action="">
+        <!-- Barra de búsqueda -->
+        <input type="text" name="search" id="buscador" class="search-bar" placeholder="Buscar..."
+               value="{{ datos.search_query }}">
+
+        <!-- Botón de búsqueda (aún lo dejamos para compatibilidad) -->
+        <button type="submit" class="search-bar-button">Buscar</button>
+
+        <!-- Filtro de rol con onchange para enviar automáticamente el formulario -->
+        <select name="role" id="rolBuscador" class="search-selector" onchange="this.form.submit()">
+            <option value="">Filtrar Rol</option>
+            <option value="Docente" {% if datos.role_filter == "Docente" %}selected{% endif %}>Docente</option>
+            <option value="Estudiante" {% if datos.role_filter == "Estudiante" %}selected{% endif %}>Estudiante</option>
+        </select>
+    </form>
+
+    <!-- Mostrar el botón de limpiar búsqueda solo si hay un filtro activo -->
+    {% if datos.search_query or datos.role_filter %}
+        <a href="?page=1" class="clear-search-button">Limpiar búsqueda</a>
+    {% endif %}
+</div>
+<div class="table-container">
+    <div class="table-wrapper">
+        <table class="table">
+            <thead>
+                <tr class="table-header">
+                    <th class="table-cell first-cell">Usuario</th>
+                    <th class="table-cell">RUT</th>
+                    <th class="table-cell">Nombre</th>
+                    <th class="table-cell">Apellido</th>
+                    <th class="table-cell">Carrera</th>
+                    <th class="table-cell">Rol</th>
+                    <th class="table-cell last-cell">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in datos.usuarios %}
+                <tr class="table-row">
+                    <td class="table-cell">{{ user.username }}</td>
+                    <td class="table-cell">{{ user.rut }}</td>
+                    <td class="table-cell">{{ user.first_name }}</td>
+                    <td class="table-cell">{{ user.last_name }}</td>
+                    <td class="table-cell">{{ user.carrera }}</td>
+                    <td class="table-cell">
+                        {% if user.is_staff %}
+                            Docente
+                        {% else %}
+                            Estudiante
+                        {% endif %}
+                    </td>
+                    <td class="table-cell">
+                        <a href="#" class="icon" onclick="showUserDetails({{ user.id }})">
+                            <i class="fa-regular fa-eye"></i>
+                        </a>
+                        <a href="{% url 'edit_user' user.id %}" class="icon">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        <!-- Verificar si el usuario actual es el mismo que el usuario que se muestra -->
+                        {% if user != request.user %}
+                            <a href="#" class="icon" onclick="showConfirmModal('{{ user.username }}', '{% url 'delete_user' user.id %}')">
+                                <i class="fas fa-ban"></i>
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% include 'core/messages.html' %}
+    </div>
+    <div id="userDetailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3 class="card-title" id="modalUserName"></h3>
+            <p><strong>RUT:</strong> <span id="modalRut"></span></p>
+            <p><strong>Nombre:</strong> <span id="modalFirstName"></span></p>
+            <p><strong>Apellido:</strong> <span id="modalLastName"></span></p>
+            <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+            <p><strong>Rol:</strong> <span id="modalRol"></span></p>
+            <p><strong>Teléfono:</strong> <span id="modalPhone"></span></p>
+            <p id="modalCarrera" style="display: none;">
+                <strong>Carrera:</strong> <span id="modalCarreraValue"></span>
+            </p>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    </script>
+</div>
+
+<!-- Paginación -->
+<div class="pagination">
+    {% if datos.usuarios.has_previous %}
+        <a href="?page=1&search={{ datos.search_query }}&role={{ datos.role_filter }}" class="btn">«</a>
+        <a href="?page={{ datos.usuarios.previous_page_number }}&search={{ datos.search_query }}&role={{ datos.role_filter }}" class="btn">‹</a>
+    {% endif %}
+
+    {% for i in datos.usuarios.paginator.page_range %}
+        {% if datos.usuarios.number == i %}
+            <span>{{ i }}</span>
+        {% else %}
+            <a href="?page={{ i }}&search={{ datos.search_query }}&role={{ datos.role_filter }}" class="btn">{{ i }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if datos.usuarios.has_next %}
+        <a href="?page={{ datos.usuarios.next_page_number }}&search={{ datos.search_query }}&role={{ datos.role_filter }}" class="btn">›</a>
+        <a href="?page={{ datos.usuarios.paginator.num_pages }}&search={{ datos.search_query }}&role={{ datos.role_filter }}" class="btn">»</a>
+    {% endif %}
+</div>
+
+
+<!-- Modal de confirmación -->
+<div id="confirmModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background-color:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:20px; border-radius:5px; text-align:center;">
+        <h3>Eliminar Usuario</h3>
+        <p id="confirmMessage"></p>
+        <!-- Botón con estilos en línea -->
+        <button id="confirmBtn" style="padding: 10px 20px; background-color: #e74c3c; color: white; font-size: 16px; border: none; border-radius: 5px; margin: 5px; cursor: pointer;" onmouseover="this.style.backgroundColor='#c0392b'" onmouseout="this.style.backgroundColor='#e74c3c'">Eliminar</button>
+        <button id="cancelBtn" style="padding: 10px 20px; background-color: #3498db; color: white; font-size: 16px; border: none; border-radius: 5px; margin: 5px; cursor: pointer;" onmouseover="this.style.backgroundColor='#2980b9'" onmouseout="this.style.backgroundColor='#3498db'">Cancelar</button>
+    </div>
+</div>
+
+<script>
+    function showConfirmModal(username, url) {
+        document.getElementById('confirmMessage').innerText = "¿Estás seguro de que deseas eliminar al usuario " + username + "?";
+        document.getElementById('confirmModal').style.display = 'flex';
+
+        document.getElementById('confirmBtn').onclick = function() {
+            window.location.href = url;
+        };
+
+        document.getElementById('cancelBtn').onclick = function() {
+            document.getElementById('confirmModal').style.display = 'none';
+        };
+    }
+</script>
+{% endblock %}

@@ -1,10 +1,12 @@
-{% extends 'core/modules2.html' %}
+{% extends 'core/module.html' %}
 
 {% block content %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <h3>Parámetros del Ensayo</h3>
+<div class="container">
 <ul>
     <li>Código de Ensayo: {{ ensayo.codigo_ensayo }}</li>
     <li>Nombre: {{ ensayo.nombre_ensayo }}</li>
@@ -25,5 +27,5 @@
         <li>Stress: {{ tiempo.stress }}</li>
         <li>Velocidad del Ensayo: {{ tiempo.velocidad_ensayo }}</li>
     </ul>
-
+</div>
 {% endblock %}

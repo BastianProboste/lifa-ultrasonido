@@ -1,0 +1,111 @@
+{% extends 'core/module.html' %}
+{% block title %} Modulo Usuario {% endblock %}
+{% block active_users %} active {% endblock %}
+{% block h2 %} Modulo de usuarios > Agregar usuarios {% endblock %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+    <div class="container">
+        <h3>Editar usuario</h3>
+        {% include 'core/messages.html' %}
+        <form method="post" id="editForm">
+            {% csrf_token %}
+            <fieldset>
+
+                <div>
+                    <label for="username">Usuario</label>
+                    <input class="form-input" value="{{user.username}}" name="username" type="text" placeholder="Nombre de usuario" required>
+                </div>
+
+                <div>
+                    <label for="rut">Rut</label>
+                    <input class="form-input" value="{{user.rut}}" name="rut" type="text" placeholder="Rut sin puntos" required>
+                </div>
+
+                <div>
+                    <label for="first_name">Nombre</label>
+                    <input class="form-input" value="{{user.first_name}}" name="first_name" type="text" placeholder="Nombre..." required>
+                </div>
+
+                <div>
+                    <label for="last_name">Apellido</label>
+                    <input class="form-input" value="{{user.last_name}}" name="last_name" type="text" placeholder="Apellido..." required>
+                </div>
+
+                <div>
+                    <label for="email">Correo</label>
+                    <input class="form-input" value="{{user.email}}" name="email" type="email" placeholder="Correo Electrónico" required>
+                </div>
+
+                <div>
+                    <label for="phone">Teléfono</label>
+                    <input class="form-input" value="{{user.phone}}" name="phone" type="phone" placeholder="Ej: +569123456789" required>
+                </div>
+
+                <div>
+                    <label for="rolSelect" style="margin-bottom: 0.5rem;">Rol</label>
+                    <select class="form-select" id="rolSelect" name="is_staff" required 
+                        style="padding: 0.588rem; border: 1px solid #ccc; font-size: 1rem; width: 100%; box-sizing: border-box;">
+                        <option disabled selected>-- Selecciona Rol --</option>
+                        {% if user.is_staff %}
+                            <option value=True selected>Docente</option>
+                            <option value=False>Estudiante</option>
+                     
+                        {% else %}
+                            <option value=False selected>Estudiante</option>
+                            <option value=True>Docente</option>
+                        {% endif %}
+                    </select>
+                </div>
+                {% if user.is_staff %}
+                    <div id="carreraField" style="display: none;">
+                        <label for="carrera">Carrera</label>
+                        <input class="form-input" name="carrera" type="text" placeholder="Carrera">
+                    </div>
+                {% else %}
+                    <div id="carreraField">
+                        <label for="carrera">Carrera</label>
+                        <input class="form-input" value="{{user.carrera}}"name="carrera" type="text" placeholder="Carrera">
+                    </div>
+                {% endif %}
+                <div class="form-actions">
+                    <a class="btn-back" href="{% url 'user_list' %}">Volver</a>
+                    <button type="submit">Añadir</button>
+                </div>
+            </fieldset>
+            {% if form.errors %}
+                <div class="alert-danger">
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+    <script>
+        // Muestra el campo de carrera solo si se selecciona Estudiante
+        document.getElementById('rolSelect').addEventListener('change', function() {
+            var carreraField = document.getElementById('carreraField');
+            var carreraInput = document.getElementById('carrera');
+            if (this.value === 'False') {
+                carreraField.style.display = 'block';
+                carreraInput.value = ''; // Limpiar el campo si se cambia a estudiante
+                carreraInput.removeAttribute('readonly'); // Hacerlo editable
+            } else { // Docente
+                carreraField.style.display = 'none';
+                carreraInput.value = 'Docente'; // Establecer valor por defecto
+                carreraInput.setAttribute('readonly', 'readonly'); // Hacerlo solo lectura
+            }
+        });
+    </script>
+
+    
+</main>
+{% endblock %}

@@ -17,7 +17,7 @@
                 <input name="password" id="passwordInput" type="password" placeholder="Contraseña" required>
                 <a href="{% url 'password_reset' %}">¿Olvidaste tu Contraseña?</a>
             </div>
-
+            {% include 'core/messages.html' %}
             <button type="submit" class="submit">Entrar</button>
         </fieldset>
     </form>

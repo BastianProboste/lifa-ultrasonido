@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-
+import pymongo
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,9 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'phonenumber_field',
+    'mathfilters',
     'core',
     'usuarios',
     'ensayo',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -73,17 +76,33 @@ TEMPLATES = [
 WSGI_APPLICATION = 'livewaveweb.wsgi.application'
 
 
+# Conectar a MongoDB usando pymongo
+MONGO_CLIENT = pymongo.MongoClient(
+    host='localhost', 
+    port=27017, 
+    username='consultoria', 
+    password='consultoria', 
+    authSource='consultoria',
+    authMechanism='SCRAM-SHA-1'
+)
+
+# Seleccionar la base de datos 'consultoria'
+#para la extraccion de datos de esta misma
+MONGO_DB = MONGO_CLIENT['consultoria']
+
+
+
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'livewaveDB',
+        'NAME': 'Live',
         'USER': 'postgres',
-        'PASSWORD': 'benja',
+        'PASSWORD': 'benja0702',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '5433',
     }
 }
 
@@ -127,6 +146,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'core/static'),)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+AUTH_USER_MODEL = 'user.User'
 
 # Rerección Login
 LOGIN_REDIRECT_URL = '/module'

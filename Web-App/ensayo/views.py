@@ -9,30 +9,20 @@ from django.db.models import Avg, Count, Q
 #from registration.models import Profile
 from django.urls import reverse_lazy
 from core.views import *
-from validacion import *
-from django.conf import settings
-from pymongo import ASCENDING
 # Create your views here.
 import xlwt
 import pandas as pd
-def num_pag():
-    return 1
-
-
-num_elemento = num_pag()#desde core se importa el numero de elementos por página
 
 from extensiones.validacion import *
-'Cambiar nombre list_ensayo_active'  
-'''@login_required'''  
 from django.core.paginator import Paginator
 from pymongo import ASCENDING
+from django.conf import settings
+from bson.objectid import ObjectId
 from django.shortcuts import render
+from django.http import Http404
 from django.conf import settings
 
-from django.core.paginator import Paginator
-from pymongo import ASCENDING
-from django.shortcuts import render
-from django.conf import settings
+
 
 def list_ensayo_active(request, page=None, search=""):
     # Conectar a MongoDB
@@ -75,6 +65,7 @@ def list_ensayo_active(request, page=None, search=""):
     # Renderizar la plantilla
     template_name = 'ensayo/list_ensayo_active.html'
     print(f"Total ensayos activos encontrados: {total_ensayos}")
+    print(f"query: {search}")
     return render(request, template_name, {
         'ensayo_list': ensayo_list,
         'paginator': paginator,
@@ -84,10 +75,7 @@ def list_ensayo_active(request, page=None, search=""):
     })
 
 
-from bson.objectid import ObjectId
-from django.shortcuts import render
-from django.http import Http404
-from django.conf import settings
+
 
 def list_tiempos_ensayo(request, ensayo_id,  page=None, search=""):
     # Conectar a MongoDB
