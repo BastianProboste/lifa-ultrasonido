@@ -5,27 +5,32 @@
 <link rel="stylesheet" href="{% static 'css/forms.css' %}">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<h3>Parámetros del Ensayo</h3>
 <div class="container">
-<ul>
-    <li>Código de Ensayo: {{ ensayo.codigo_ensayo }}</li>
-    <li>Nombre: {{ ensayo.nombre_ensayo }}</li>
-    <li>Estado: {{ ensayo.estado_ensayo }}</li>
-    <li>Fecha: {{ ensayo.fecha_ensayo }}</li>
-</ul>
+    <h3>Detalles del Ensayo</h3>
 
-    <h2>Detalles del Tiempo ID: {{ tiempo.tiempo_id }}</h2>
+    <!-- Detalle de los ensayos -->
+    <div class="mb-5">
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Código de Ensayo:</strong> {{ ensayo.codigo_ensayo }}</li>
+            <li class="list-group-item"><strong>Nombre:</strong> {{ ensayo.nombre_ensayo }}</li>
+            <li class="list-group-item"><strong>Estado:</strong> {{ ensayo.estado_ensayo }}</li>
+            <li class="list-group-item"><strong>Fecha:</strong> {{ ensayo.fecha_ensayo }}</li>
+        </ul>
+    </div>
 
-    <ul>
-        <li>Valor: {{ tiempo.valor }}</li>
-        <li>Velocidad: {{ tiempo.velocidad }}</li>
-        <li>Fuerza: {{ tiempo.fuerza }}</li>
-        <li>Espesor: {{ tiempo.espesor }}</li>
-        <li>Time of Fly: {{ tiempo.time_of_fly }}</li>
-        <li>ESD: {{ tiempo.esd }}</li>
-        <li>Strain: {{ tiempo.strain }}</li>
-        <li>Stress: {{ tiempo.stress }}</li>
-        <li>Velocidad del Ensayo: {{ tiempo.velocidad_ensayo }}</li>
-    </ul>
-</div>
+    <!-- Detalles del Tiempo -->
+    <div class="mb-5">
+        <h3 class="h3 text-primary">Detalles del Tiempo (ID: {{ tiempo.tiempo_id }})</h3>
+        <ul class="list-group">S
+            <li class="list-group-item"><strong>Valor:</strong> {{ tiempo.valor }}</li>
+            <li class="list-group-item"><strong>Velocidad:</strong> {{ tiempo.velocidad }}</li>
+            <li class="list-group-item"><strong>Fuerza:</strong> {{ tiempo.fuerza }}</li>
+            <li class="list-group-item"><strong>Espesor:</strong> {{ tiempo.espesor }}</li>
+            <li class="list-group-item"><strong>Time of Fly:</strong> {{ tiempo.time_of_fly }}</li>
+            <li class="list-group-item"><strong>ESD:</strong> {{ tiempo.esd }}</li>
+            <li class="list-group-item"><strong>Strain:</strong> {{ tiempo.strain }}</li>
+            <li class="list-group-item"><strong>Stress:</strong> {{ tiempo.stress }}</li>
+            <li class="list-group-item"><strong>Velocidad del Ensayo:</strong> {{ tiempo.velocidad_ensayo }}</li>
+        </ul>
+    </div>
 {% endblock %}
