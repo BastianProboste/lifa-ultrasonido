@@ -38,33 +38,29 @@
     <p>{{ ensayo.descripcion }}</p>
     </div>
 
-<div class="container">
-    <header class='mb-5'>
-        <div class="titu-mein">
-            <h2 class='h2 medium text-blue'>Tiempos</h2>
-        </div>
-    </header>
-    <form method="post" action="" class="d-flex align-items-center justify-content-between w-100 flex-wrap">
-        {% csrf_token %}
-        
-        <!-- Search bar -->
-        <div class="mb-3 flex-grow-1 me-2">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-        </div>
+    <div class="container">
+        <header class='mb-5'>
+            <div class="titu-mein">
+                <h2 class='h2 medium text-blue'>Tiempos</h2>
+            </div>
+        </header>
+        <form method="post" action="" class="d-flex align-items-center justify-content-between w-100 flex-wrap">
+            {% csrf_token %}
+            
+            <!-- Search bar -->
+            <div class="mb-3 flex-grow-1 me-2">
+                <input class="form-control" type="search" name="search" value="{{ search }}" placeholder="Search" aria-label="Search">
+            </div>
+    
+            <!-- Search button -->
+            <div class="mb-3 me-2">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </div>
+            <div class="mb-3">
+                <a class="btn btn-primary" href="{% url 'list_ensayo_active' %}" role="button">Listado de usuarios</a>
+            </div>
 
-        
-        <!-- Search button -->
-        <div class="mb-3 me-2">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </div>
-        <div class="mb-3">
-            <a class="btn btn-primary" href="{% url 'list_ensayo_active' %}" role="button">Listado de usuarios</a>
-        </div>
-
-
-    </form>
-
-</div>
+            
 
 <body>
     

@@ -32,10 +32,8 @@ def list_ensayo_active(request, page=None, search=""):
     # Obtener la página actual
     page = request.GET.get('page', 1)
 
-    # Obtener la cadena de búsqueda
-    if request.method == 'POST':
-        search = request.POST.get('search', '').strip()  # Limpiar la búsqueda
-        page = 1  # Reiniciar a la primera página en la búsqueda
+    # Obtener la cadena de búsqueda desde el parámetro GET
+    search = request.GET.get('search', '').strip()  # Limpiar la búsqueda
 
     # Número de elementos por página
     num_elemento = 10
@@ -66,6 +64,7 @@ def list_ensayo_active(request, page=None, search=""):
     template_name = 'ensayo/list_ensayo_active.html'
     print(f"Total ensayos activos encontrados: {total_ensayos}")
     print(f"query: {search}")
+
     return render(request, template_name, {
         'ensayo_list': ensayo_list,
         'paginator': paginator,
@@ -76,8 +75,7 @@ def list_ensayo_active(request, page=None, search=""):
 
 
 
-
-def list_tiempos_ensayo(request, ensayo_id,  page=None, search=""):
+def list_tiempos_ensayo(request, ensayo_id, page=None, search=""):
     # Conectar a MongoDB
     mongo_db = settings.MONGO_DB
     ensayos_collection = mongo_db.ensayo  # Colección de ensayos
@@ -85,13 +83,13 @@ def list_tiempos_ensayo(request, ensayo_id,  page=None, search=""):
     # Obtener la página actual
     page = request.GET.get('page', 1)
 
-    # Obtener la cadena de búsqueda
+    # Obtener la cadena de búsqueda desde POST si existe
     if request.method == 'POST':
         search = request.POST.get('search', '').strip()  # Limpiar la búsqueda
         page = 1  # Reiniciar a la primera página en la búsqueda
-    # Número de elementos por página
-    num_elemento = 10
 
+    # Número de elementos por página
+    num_elementos = 10
 
     # Intentar obtener el ensayo por su _id
     try:
@@ -106,12 +104,28 @@ def list_tiempos_ensayo(request, ensayo_id,  page=None, search=""):
     # Obtener los tiempos del ensayo
     tiempos = ensayo.get('tiempos', [])
 
+    # Si se proporciona un término de búsqueda, filtrar los tiempos
+    if search:
+        # Filtrar los tiempos que coincidan con el término de búsqueda
+        tiempos = [tiempo for tiempo in tiempos if search.lower() in str(tiempo.get('valor', '')).lower()]
+
+    # Paginación
+    start_idx = (int(page) - 1) * num_elementos
+    end_idx = start_idx + num_elementos
+    tiempos_paginados = tiempos[start_idx:end_idx]
+
     # Renderizar la plantilla
     template_name = 'ensayo/list_tiempos_ensayo.html'
     return render(request, template_name, {
         'ensayo': ensayo,
-        'tiempos': tiempos,
+        'tiempos': tiempos_paginados,
+        'search': search,  # Pasar el término de búsqueda a la plantilla
+        'page': page,      # Pasar la página actual
     })
+
+
+
+
 
 def detalle_tiempo(request, tiempo_id):
     mongo_db = settings.MONGO_DB
@@ -127,6 +141,7 @@ def detalle_tiempo(request, tiempo_id):
     return render(request, 'ensayo/detalle_tiempo.html', {
         'ensayo': ensayo,
         'tiempo': tiempo,
+        
     })
 
 
@@ -138,22 +153,20 @@ def list_ensayo_deactivate(request, page=None, search=""):
     # Obtener la página actual
     page = request.GET.get('page', 1)
 
-    # Obtener la cadena de búsqueda
-    if request.method == 'POST':
-        search = request.POST.get('search', '').strip()  # Limpiar la búsqueda
-        page = 1  # Reiniciar a la primera página en la búsqueda
+    # Obtener la cadena de búsqueda desde el parámetro GET (en la URL)
+    search = request.GET.get('search', '').strip()  # Limpiar la búsqueda
 
     # Número de elementos por página
     num_elemento = 10
 
-    # Crear una consulta base para ensayos activos
+    # Crear una consulta base para ensayos desactivados
     query = {"estado_ensayo": "Deactivate"}
 
     # Si hay una búsqueda, agregarla a la consulta
     if search:
         query["nombre_ensayo"] = {"$regex": search, "$options": "i"}  # Búsqueda insensible a mayúsculas
 
-    # Obtener todos los ensayos activos de MongoDB, ordenados por `fecha_ensayo`
+    # Obtener todos los ensayos desactivados de MongoDB, ordenados por `fecha_ensayo`
     ensayo_all = ensayos_collection.find(query).sort("fecha_ensayo", ASCENDING)
 
     # Contar documentos que coinciden con la consulta
@@ -170,7 +183,9 @@ def list_ensayo_deactivate(request, page=None, search=""):
 
     # Renderizar la plantilla
     template_name = 'ensayo/list_ensayo_deactivate.html'
-    print(f"Total ensayos activos encontrados: {total_ensayos}")
+    print(f"Total ensayos desactivados encontrados: {total_ensayos}")
+    print(f"query: {search}")
+
     return render(request, template_name, {
         'ensayo_list': ensayo_list,
         'paginator': paginator,
@@ -178,7 +193,6 @@ def list_ensayo_deactivate(request, page=None, search=""):
         'search': search,
         'total_ensayos': total_ensayos,
     })
-
 
 
 '''@login_required'''
