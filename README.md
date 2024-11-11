@@ -1,6 +1,8 @@
 # lifa-ultrasonido
 ## Descripcion
-Sistema para medir cambios microestructurales en metales mediante ensayos de tracción y tecnología ultrasónica. Integra sensores, Arduino, cámaras y tarjeta PCIe para recolección y análisis en tiempo real.
+Este proyecto tiene como objetivo cuantificar cambios microestructurales en muestras de acero sometidas a tracción mediante ultrasonido. Utiliza un generador de funciones, transductores, una máquina de tracción, una cámara, y un sensor inductivo para medir parámetros físicos durante la deformación.
+
+Además, se emplea un Arduino para medir la deformación directa con un sensor strain gauge. Los datos se procesan en un PC principal, mientras otro PC monitoriza el ensayo en tiempo real. La metodología Scrum organiza el trabajo en sprints semanales para asegurar entregas continuas y funcionales.
 
 
 
@@ -54,6 +56,15 @@ La imagen que se observa es la pagina de ensayo de la interfaz la cual iran todo
 ### Cargar datos
 ![Imagen de WhatsApp 2024-11-07 a las 13 00 59_e11bb7fe](https://github.com/user-attachments/assets/ee667aef-d051-438a-854d-8401ba783738)
 
+
+
+
+
+
+
+
+## Uso
+Instrucciones sobre cómo utilizar el proyecto
 
 
 
