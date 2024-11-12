@@ -4,7 +4,7 @@ Este proyecto tiene como objetivo cuantificar cambios microestructurales en mues
 
 Además, se emplea un Arduino para medir la deformación directa con un sensor strain gauge. Los datos se procesan en un PC principal, mientras otro PC monitoriza el ensayo en tiempo real. La metodología Scrum organiza el trabajo en sprints semanales para asegurar entregas continuas y funcionales.
 
-
+## Indice
 
 ## 📂 Instalación
 
