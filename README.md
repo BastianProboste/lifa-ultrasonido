@@ -30,7 +30,7 @@ De esta misma manera se instala requirements2.txt
 
 
 ## Requerimientos
-
+Software, bibliotecas o entornos necesarios para que funcione el proyecto (ejemplo: versiones de Python, Node.js, etc.).
 
 
 ## Soporte visual
