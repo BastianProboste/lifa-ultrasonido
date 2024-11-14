@@ -42,22 +42,23 @@
 
 </header>
 <div class="container">
-    <form method="post" action="" class="d-flex align-items-center justify-content-between w-100 flex-wrap">
+    <form method="get" action="" class="d-flex align-items-center justify-content-between w-100 flex-wrap">
         {% csrf_token %}
+        
+        <!-- Barra de búsqueda -->
         <div class="mb-3 flex-grow-1 me-2">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search" value="{{ search }}" />
+            <input class="form-control" type="search" name="search" value="{{ search }}" placeholder="Buscar por nombre de ensayo" aria-label="Search">
         </div>
-        
+
+        <!-- Botón de búsqueda -->
         <div class="mb-3 me-2">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
         </div>
-        
         <div class="mb-3">
             <a class="btn btn-primary" href="{% url 'list_ensayo_active' %}" role="button">Ensayos Activos</a>
         </div>
-
     </form>
-    
+        
 </div>
 
 
