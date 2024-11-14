@@ -84,11 +84,14 @@
                     
                     <td class="all-lightgray">
                         <a href="{% url 'list_tiempos_ensayo' ensayo.id %}" title="Tiempos" class="user-action">
-                            <i class="fa-solid fa-eye"></i> 
+                            <i class="fa-solid fa-eye"></i>     
                         </a>
                         &nbsp;
                         <a href="#" onclick="confirmarCambio('{% url 'ensayo_deactivate' ensayo.id %}')" title="Desactivar" class="user-action">
                             <i class="fas fa-ban"></i>
+                        </a>
+                        <a href="{% url 'grafico' ensayo.id %}" title="Gráfico" class="user-action">
+                            <i class="fa-solid fa-chart-bar"></i>     
                         </a>
                     </td>
 

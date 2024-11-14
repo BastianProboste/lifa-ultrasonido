@@ -17,6 +17,10 @@ ensayo_urlpatterns = [
     path('ensayo_activate/<ensayo_id>',views.ensayo_activate,name='ensayo_activate'),
     path('ensayo/tiempos/<str:ensayo_id>/', views.list_tiempos_ensayo, name='list_tiempos_ensayo'),
 
+
+    
+    path('ensayo/grafico/<str:ensayo_id>', views.grafico, name='grafico'),
+
     path('ensayo/tiempos/detalle/<str:tiempo_id>/', views.detalle_tiempo, name='detalle_tiempo'),
 
     

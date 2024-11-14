@@ -114,14 +114,67 @@ def list_tiempos_ensayo(request, ensayo_id, page=None, search=""):
     end_idx = start_idx + num_elementos
     tiempos_paginados = tiempos[start_idx:end_idx]
 
-    # Renderizar la plantilla
     template_name = 'ensayo/list_tiempos_ensayo.html'
     return render(request, template_name, {
         'ensayo': ensayo,
         'tiempos': tiempos_paginados,
-        'search': search,  # Pasar el término de búsqueda a la plantilla
-        'page': page,      # Pasar la página actual
+        'search': search,  
+        'page': page,      
     })
+
+def grafico(request, ensayo_id):
+    mongo_db = settings.MONGO_DB
+    ensayos_collection = mongo_db.ensayo
+
+    # Obtener el ensayo por su _id
+    try:
+        ensayo = ensayos_collection.find_one({"_id": ObjectId(ensayo_id)})
+    except Exception as e:
+        return render(request, 'ensayo/error.html', {'mensaje': 'Error al buscar el ensayo.'})
+
+    # Manejar el caso en que no se encuentre el ensayo
+    if ensayo is None:
+        return render(request, 'ensayo/error.html', {'mensaje': 'Ensayo no encontrado.'})
+
+    # Opción predeterminada si no se pasa ninguna opción
+    opcion = request.POST.get('opcion', 'opcion1')
+
+    # Configurar los datos según la opción seleccionada
+    if opcion == 'opcion1':
+        # Opción 1: Mostrar tiempo.valor en el eje X y fuerza en el eje Y
+        datos = [
+            {"campo1": tiempo.get("valor"), "campo2": tiempo.get("fuerza")}
+            for tiempo in ensayo.get("tiempos", [])
+        ]
+        titulo = "Gráfico de Tiempo vs Fuerza (Opción 1)"
+    elif opcion == 'opcion2':
+        # Opción 2: (Puedes modificar los datos según esta opción)
+        datos = [
+            {"campo1": tiempo.get("valor"), "campo2": tiempo.get("fuerza")}
+            for tiempo in ensayo.get("tiempos", [])
+        ]
+        titulo = "Gráfico de Tiempo vs Fuerza (Opción 2)"
+    elif opcion == 'opcion3':
+        # Opción 3: Modifica los datos según esta opción
+        datos = [
+            {"campo1": tiempo.get("valor"), "campo2": tiempo.get("fuerza")}
+            for tiempo in ensayo.get("tiempos", [])
+        ]
+        titulo = "Gráfico de Tiempo vs Fuerza (Opción 3)"
+
+    # Preparar los datos para el gráfico
+    eje_x = [dato.get("campo1") for dato in datos]  # Extraer los valores para el eje X
+    valores_y = [dato.get("campo2") for dato in datos]  # Extraer los valores para el eje Y
+
+    # Pasar los datos a la plantilla
+    datos_grafico = {
+        "eje_x": eje_x,
+        "valores_y": valores_y,
+        "titulo": titulo,
+        "ensayo_id": ensayo_id  # Aquí pasamos el ensayo.id a la plantilla
+    }
+
+    return render(request, 'ensayo/grafico.html', datos_grafico)
 
 
 
@@ -129,12 +182,10 @@ def list_tiempos_ensayo(request, ensayo_id, page=None, search=""):
 
 def detalle_tiempo(request, tiempo_id):
     mongo_db = settings.MONGO_DB
-    ensayos_collection = mongo_db.ensayo  # Colección de ensayos
+    ensayos_collection = mongo_db.ensayo  
 
-    # Obtener el ensayo que contiene el tiempo específico
     ensayo = ensayos_collection.find_one({"tiempos.tiempo_id": tiempo_id})
 
-    # Buscar el tiempo específico dentro del ensayo
     tiempo = next((t for t in ensayo['tiempos'] if t['tiempo_id'] == tiempo_id), None)
 
 
@@ -146,42 +197,34 @@ def detalle_tiempo(request, tiempo_id):
 
 
 def list_ensayo_deactivate(request, page=None, search=""):
-    # Conectar a MongoDB
     mongo_db = settings.MONGO_DB
-    ensayos_collection = mongo_db.ensayo  # Colección de ensayos
+    ensayos_collection = mongo_db.ensayo 
 
-    # Obtener la página actual
     page = request.GET.get('page', 1)
 
-    # Obtener la cadena de búsqueda desde el parámetro GET (en la URL)
-    search = request.GET.get('search', '').strip()  # Limpiar la búsqueda
-
-    # Número de elementos por página
+    search = request.GET.get('search', '').strip()  
+  
     num_elemento = 10
 
-    # Crear una consulta base para ensayos desactivados
     query = {"estado_ensayo": "Deactivate"}
 
-    # Si hay una búsqueda, agregarla a la consulta
-    if search:
-        query["nombre_ensayo"] = {"$regex": search, "$options": "i"}  # Búsqueda insensible a mayúsculas
 
-    # Obtener todos los ensayos desactivados de MongoDB, ordenados por `fecha_ensayo`
+    if search:
+        query["nombre_ensayo"] = {"$regex": search, "$options": "i"}  
+
     ensayo_all = ensayos_collection.find(query).sort("fecha_ensayo", ASCENDING)
 
-    # Contar documentos que coinciden con la consulta
+
     total_ensayos = ensayos_collection.count_documents(query)
 
-    # Paginación
     ensayos_con_id = []
     for ensayo in ensayo_all:
-        ensayo['id'] = str(ensayo['_id'])  # Convertir ObjectId a cadena
+        ensayo['id'] = str(ensayo['_id'])  
         ensayos_con_id.append(ensayo)
 
-    paginator = Paginator(ensayos_con_id, num_elemento)  # Convertir a lista para paginar
+    paginator = Paginator(ensayos_con_id, num_elemento)  
     ensayo_list = paginator.get_page(page)
 
-    # Renderizar la plantilla
     template_name = 'ensayo/list_ensayo_deactivate.html'
     print(f"Total ensayos desactivados encontrados: {total_ensayos}")
     print(f"query: {search}")
@@ -208,9 +251,8 @@ def ensayo_main(request):
 
 def ensayo_deactivate(request, ensayo_id):
     mongo_db = settings.MONGO_DB
-    ensayos_collection = mongo_db.ensayo  # Colección de ensayos
+    ensayos_collection = mongo_db.ensayo  
 
-    # Intentar actualizar el ensayo por su _id
     try:
         result = ensayos_collection.update_one(
             {"_id": ObjectId(ensayo_id)},
@@ -218,7 +260,7 @@ def ensayo_deactivate(request, ensayo_id):
         )
 
         if result.modified_count > 0:
-            return redirect('list_ensayo_active')  # Redirigir a la lista de ensayos activos
+            return redirect('list_ensayo_active')  
         else:
             return render(request, 'ensayo/error.html', {'mensaje': 'No se encontró el ensayo o ya estaba desactivado.'})
 
