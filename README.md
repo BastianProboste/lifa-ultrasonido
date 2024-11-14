@@ -50,35 +50,46 @@ Esta imagen representa el login de la pagina web del proyecto, en la caul estara
 Estas imagen corresponderan al diseño de la interfaz GUI la cual se abrira desde el sescritorio del computador del laboratorio.
 
 ### Ensayo
-![image](https://github.com/user-attachments/assets/c3a5044a-c906-4a1c-8554-0c79e4fa49ff)
-La imagen que se observa es la pagina de ensayo de la interfaz la cual iran todos los datos neciesarios para iniciar el ensayo y los datos que se obtendran mediante la camara.
+
+La imagen que se observa es la pagina de ensayo de la interfaz la cual iran todos los datos neciesarios para iniciar el ensayo  y selecionar el material utilizado en el ensayo y los datos que se obtendran mediante la camara.
+![Imagen de WhatsApp 2024-11-14 a las 16 21 03_4003751e](https://github.com/user-attachments/assets/322521f4-4985-498b-bf20-a670d78b3561)
+
 
 ### Cargar datos
-![Imagen de WhatsApp 2024-11-07 a las 13 00 59_e11bb7fe](https://github.com/user-attachments/assets/ee667aef-d051-438a-854d-8401ba783738)
+![Imagen de WhatsApp 2024-11-14 a las 16 20 55_20f0ee6c](https://github.com/user-attachments/assets/b68f687b-98da-419f-b32a-600552c38fd6)
+
 
 En esta ventana de la interfaz verificaremos que se esten detectando los equipos para luego conectarlos, tambien se añadira los datos para el generdador de funciones y darle al boton guardar para que esta configuracion quede almacenada en la base de datos.
 
 
+### Tarjeta de Adquicision
+En esta parte de la interfaz se mostrara la grafica con los datos que se vayan recibiendo del a tarjeta de adquicision  donde se puede modificar los rangos del canal 1, canal 2 y Se puede modificar la muestra, luego estos cambos al darle al boton aplicar se palican para el ensayo y al darle al boton guardar esta configuracion se guarda en la base de datos o tambien la otra forma es cargar una configuracion ya echa.
+![Imagen de WhatsApp 2024-11-14 a las 16 21 08_5d62bc80](https://github.com/user-attachments/assets/e3020b17-9cb4-48a5-93f2-9380304619e9)
 
 ### Equipos
 PC1:
 Este es el ordenador principal encargado de controlar y configurar los elementos del ensayo de tracción. A través de este equipo, se gestionan los datos provenientes de los sensores, la tarjeta de adquisición Phidget, el generador de funciones y la cámara. También envía la señal para iniciar la adquisición de datos en el PC2. Esta es la imagen del PC1.
+![Imagen de WhatsApp 2024-10-16 a las 16 29 35_1b4afe43](https://github.com/user-attachments/assets/1a05ca57-5d4e-4746-9516-d7ba2f65a6e5)
+
 
 PC2:
 Este ordenador recibe y visualiza los datos del ensayo de tracción en tiempo real. Utiliza el software "WDW TEST CONTROL" para monitorear variables clave, como la fuerza aplicada y la deformación de la muestra. Se comunica con el PC1 para iniciar la adquisición de datos. La imagen del PC2.
 
 Generador de funciones (DG1022):
 Este dispositivo genera las ondas ultrasónicas que se transmiten a través de la muestra de acero. El generador de funciones permite configurar la amplitud, frecuencia y el número de ciclos de las señales ultrasónicas emitidas, y está conectado al sistema mediante USB para que se le puedan enviar comandos de control desde el PC1.
+![image](https://github.com/user-attachments/assets/669d8e57-9a74-4781-96db-38a1edeaefa8)
 
 
 Máquina de tracción (HD-B612-10S):
 La máquina de tracción es la encargada de aplicar la fuerza de tensión a la muestra de acero. Durante el ensayo, esta máquina estira la muestra hasta que se produce una fractura, y los datos de fuerza y desplazamiento se transmiten al sistema para su análisis.
+![image](https://github.com/user-attachments/assets/83956c61-0fbe-47d5-b612-a9eb84e1aa15)
 
 Cámara:
 La cámara se utiliza para monitorear el espesor del material durante el ensayo. Ubicada frente a la muestra, captura cambios visuales en el espesor en tiempo real. Esto ayuda a calcular la deformación transversal del material mientras se lleva a cabo el ensayo.
 
 Sensor inductivo:
 Este sensor mide el espesor en áreas de la muestra que la cámara no puede captar adecuadamente. Complementa la información proporcionada por la cámara, asegurando una medición precisa del espesor en varios puntos de la muestra.
+![image](https://github.com/user-attachments/assets/eff9bea6-5db6-401a-81c3-1c3631b24030)
 
 Phidget:
 El Phidget es una tarjeta de adquisición conectada vía USB que recibe las señales del sensor inductivo y del strain gauge. Se usa para capturar datos específicos del ensayo, especialmente relacionados con la fuerza aplicada y el espesor del material.
