@@ -31,7 +31,8 @@ De esta misma manera se instala requirements2.txt
 
 ## Requerimientos
 Software, bibliotecas o entornos necesarios para que funcione el proyecto (ejemplo: versiones de Python, Node.js, etc.).
-
+Crear un entorno en conda con la version de python==3.6. Y luego instalar los requeriments que en estos se contiene todas las librerias ocupadas, para hacer funcionar este proyecto en cualquier computador.
+Para este software se utilizo la version de python-slugify==6.1.1
 
 ## Soporte visual
 
@@ -100,8 +101,10 @@ La cámara se utiliza para monitorear el espesor del material durante el ensayo.
 
 ### Diagrama 
 En este diagrama de flujo se mostrara las conexiones que hay entre los equipos.
-[Diagrama-completo-TestDeTraccion.drawio.pdf](https://github.com/user-attachments/files/17759980/Diagrama-completo-TestDeTraccion.drawio.pdf)
-![image](https://github.com/user-attachments/assets/d9f41e05-8f8a-44e4-8941-b058b9e3bcdd)
+[Diagrama TestDetraccion.drawio (14).pdf](https://github.com/user-attachments/files/17781031/Diagrama.TestDetraccion.drawio.14.pdf)
+
+![image](https://github.com/user-attachments/assets/70210933-b9b3-4ae7-b1c5-5381dce8f4e6)
+
 
 
 ## Uso
