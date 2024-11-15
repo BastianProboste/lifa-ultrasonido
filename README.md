@@ -95,9 +95,7 @@ Cámara:
 La cámara se utiliza para monitorear el espesor del material durante el ensayo. Ubicada frente a la muestra, captura cambios visuales en el espesor en tiempo real. Esto ayuda a calcular la deformación transversal del material mientras se lleva a cabo el ensayo.
 
 
-Phidget:
-El Phidget es una tarjeta de adquisición conectada vía USB que recibe las señales del sensor inductivo y del strain gauge. Se usa para capturar datos específicos del ensayo, especialmente relacionados con la fuerza aplicada y el espesor del material.
-![Imagen de WhatsApp 2024-11-15 a las 09 43 28_644730fa](https://github.com/user-attachments/assets/67e0db33-f17a-4555-89d2-dc02010294de)
+
 
 
 ### Diagrama 
