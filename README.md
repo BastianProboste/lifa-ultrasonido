@@ -1,8 +1,8 @@
 # lifa-ultrasonido
 ## Descripcion
-Este proyecto tiene como objetivo cuantificar cambios microestructurales en muestras de acero sometidas a tracción mediante ultrasonido. Utiliza un generador de funciones, transductores, una máquina de tracción, una cámara, y un sensor inductivo para medir parámetros físicos durante la deformación.
+Este proyecto tiene como objetivo cuantificar cambios microestructurales en muestras de acero sometidas a tracción mediante ultrasonido. Utiliza un generador de funciones, transductores, una máquina de tracción y  una cámara, para medir parámetros físicos durante la deformación.
 
-Además, se emplea un Arduino para medir la deformación directa con un sensor strain gauge. Los datos se procesan en un PC principal, mientras otro PC monitoriza el ensayo en tiempo real. La metodología Scrum organiza el trabajo en sprints semanales para asegurar entregas continuas y funcionales.
+Los datos se procesan en un PC principal, mientras otro PC monitoriza el ensayo en tiempo real. La metodología Scrum organiza el trabajo en sprints semanales para asegurar entregas continuas y funcionales.
 
 ## Indice
 
@@ -76,24 +76,29 @@ Este es el ordenador principal encargado de controlar y configurar los elementos
 PC2:
 Este ordenador recibe y visualiza los datos del ensayo de tracción en tiempo real. Utiliza el software "WDW TEST CONTROL" para monitorear variables clave, como la fuerza aplicada y la deformación de la muestra. Se comunica con el PC1 para iniciar la adquisición de datos. La imagen del PC2.
 
+![Imagen de WhatsApp 2024-11-15 a las 09 43 31_eceac5da](https://github.com/user-attachments/assets/61d903d4-3949-4c67-9fdc-2823509daf78)
+
+
 Generador de funciones (DG1022):
 Este dispositivo genera las ondas ultrasónicas que se transmiten a través de la muestra de acero. El generador de funciones permite configurar la amplitud, frecuencia y el número de ciclos de las señales ultrasónicas emitidas, y está conectado al sistema mediante USB para que se le puedan enviar comandos de control desde el PC1.
-![image](https://github.com/user-attachments/assets/669d8e57-9a74-4781-96db-38a1edeaefa8)
+![Imagen de WhatsApp 2024-11-15 a las 09 43 31_2aaf044b](https://github.com/user-attachments/assets/d4c53af6-460f-4041-8344-80111781d0f2)
+
 
 
 Máquina de tracción (HD-B612-10S):
 La máquina de tracción es la encargada de aplicar la fuerza de tensión a la muestra de acero. Durante el ensayo, esta máquina estira la muestra hasta que se produce una fractura, y los datos de fuerza y desplazamiento se transmiten al sistema para su análisis.
-![image](https://github.com/user-attachments/assets/83956c61-0fbe-47d5-b612-a9eb84e1aa15)
+
+![Imagen de WhatsApp 2024-11-15 a las 09 43 33_69a0aad3](https://github.com/user-attachments/assets/04a199f5-2378-4494-adbc-0be51e570308)
+
 
 Cámara:
 La cámara se utiliza para monitorear el espesor del material durante el ensayo. Ubicada frente a la muestra, captura cambios visuales en el espesor en tiempo real. Esto ayuda a calcular la deformación transversal del material mientras se lleva a cabo el ensayo.
 
-Sensor inductivo:
-Este sensor mide el espesor en áreas de la muestra que la cámara no puede captar adecuadamente. Complementa la información proporcionada por la cámara, asegurando una medición precisa del espesor en varios puntos de la muestra.
-![image](https://github.com/user-attachments/assets/eff9bea6-5db6-401a-81c3-1c3631b24030)
 
 Phidget:
 El Phidget es una tarjeta de adquisición conectada vía USB que recibe las señales del sensor inductivo y del strain gauge. Se usa para capturar datos específicos del ensayo, especialmente relacionados con la fuerza aplicada y el espesor del material.
+![Imagen de WhatsApp 2024-11-15 a las 09 43 28_644730fa](https://github.com/user-attachments/assets/67e0db33-f17a-4555-89d2-dc02010294de)
+
 
 ### Diagrama 
 En este diagrama de flujo se mostrara las conexiones que hay entre los equipos.
