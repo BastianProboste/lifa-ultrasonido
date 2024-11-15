@@ -34,6 +34,7 @@ Software, bibliotecas o entornos necesarios para que funcione el proyecto (ejemp
 
 
 ## Soporte visual
+
 ![image](https://github.com/user-attachments/assets/49f36865-22c3-4e3b-887f-6b430802f2d1)
 Esta imagen representa el login de la pagina web del proyecto, en la caul estara un modulo de ensayo y un modulo de gestion de usuarios en donde se podran crear, editar  y eliminar usuarios. Las siguientes imagenes corresponderan a lo antes mencionado
 
@@ -94,7 +95,15 @@ Este sensor mide el espesor en áreas de la muestra que la cámara no puede capt
 Phidget:
 El Phidget es una tarjeta de adquisición conectada vía USB que recibe las señales del sensor inductivo y del strain gauge. Se usa para capturar datos específicos del ensayo, especialmente relacionados con la fuerza aplicada y el espesor del material.
 
+### Diagrama 
+En este diagrama de flujo se mostrara las conexiones que hay entre los equipos.
+[Diagrama-completo-TestDeTraccion.drawio.pdf](https://github.com/user-attachments/files/17759980/Diagrama-completo-TestDeTraccion.drawio.pdf)
+![image](https://github.com/user-attachments/assets/d9f41e05-8f8a-44e4-8941-b058b9e3bcdd)
+
+
 ## Uso
+
+
 Instrucciones sobre cómo utilizar el proyecto
 
 
