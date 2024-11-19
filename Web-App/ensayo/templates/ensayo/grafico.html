@@ -1,9 +1,14 @@
+{% extends 'core/module.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/grafico.css' %}">
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>{{ titulo }}</title>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.0/dist/echarts.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
 </head>
 <body>
     <h1>{{ titulo }}</h1>
@@ -19,6 +24,8 @@
     </form>
 
     <div id="grafico" style="width: 600px; height: 400px;"></div>
+
+    <a href="{% url 'list_ensayo_active' %}" class="boton-volver">Volver a Lista de Ensayos</a>
 
     <script>
         // Inicializa ECharts en el contenedor
@@ -48,3 +55,4 @@
     </script>
 </body>
 </html>
+{% endblock %}

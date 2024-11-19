@@ -12,7 +12,7 @@ from core.views import *
 # Create your views here.
 import xlwt
 import pandas as pd
-
+from django.contrib.auth.models import User 
 from extensiones.validacion import *
 from django.core.paginator import Paginator
 from pymongo import ASCENDING
@@ -290,6 +290,47 @@ def ensayo_activate(request, ensayo_id):
 
 
 
+# Vista para agregar rut a ensayo
+def agregar_rut_ensayo(request, ensayo_id):
+    mongo_db = settings.MONGO_DB
+    ensayos_collection = mongo_db.ensayo  # Colección de ensayos
+
+    if request.method == 'POST':
+        rut = request.POST.get('rut', '').strip()
+
+        # Validar que el RUT no esté vacío
+        if not rut:
+            messages.error(request, "El RUT no puede estar vacío.")
+            return redirect('list_ensayo_active')  # Redirigir a la lista de ensayos
+
+        try:
+            # Verificar que el RUT exista en la base de datos de Django (modelo User)
+            user = User.objects.get(rut=rut)
+
+            # Obtener el ensayo por su _id
+            ensayo = ensayos_collection.find_one({"_id": ObjectId(ensayo_id)})
+            if not ensayo:
+                messages.error(request, "Ensayo no encontrado.")
+                return redirect('list_ensayo_active')  # Redirigir a la lista de ensayos
+
+            # Aquí asociamos el RUT al ensayo
+            print("aa")
+            ensayos_collection.update_one(
+                {"_id": ObjectId(ensayo_id)},
+                {"$set": {"rut_asociado": rut}}  # Asociamos el RUT al ensayo
+            )
+
+            messages.success(request, f"El RUT {rut} ha sido asociado al ensayo correctamente.")
+            return redirect('list_ensayo_active')  # Redirigir a la lista de ensayos
+
+        except User.DoesNotExist:
+            print("aaaaaaa")
+            # Si no existe el RUT en la base de datos de Django
+            messages.error(request, "El RUT no existe en el sistema.")
+            return redirect('list_ensayo_active')  # Redirigir a la lista de ensayos
+
+    else:
+        return redirect('list_ensayo_active')  # Si no es una solicitud POST, redirigir
 
 
     
