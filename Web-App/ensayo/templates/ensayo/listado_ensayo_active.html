@@ -71,7 +71,7 @@
             </tr>
         </thead>    
         <tbody>
-            {% for ensayo in ensayo_list %}
+            {% for ensayo in ensayo_listado %}
                 <tr>
                     <td class="user-data"> {{ ensayo.codigo_ensayo }}</td>
                     <td class="user-data"> {{ ensayo.nombre_ensayo }}</td>
@@ -100,13 +100,13 @@
     </table>
 
     <!-- Paginación -->
-    {% if ensayo_list.paginator.num_pages > 1 %}
+    {% if ensayo_listado.paginator.num_pages > 1 %}
         <div class="d-flex">
             <nav aria-label="Page navigation example" class="ms-auto">
                 <ul class="pagination pagination-table">
-                    {% if ensayo_list.has_previous %}
+                    {% if ensayo_listado.has_previous %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ ensayo_list.previous_page_number }}&search={{ search }}" aria-label="Previous">
+                            <a class="page-link" href="?page={{ ensayo_listado.previous_page_number }}&search={{ search }}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -115,16 +115,16 @@
                             <a class="page-link" href="#" tabindex="-1">&laquo;</a>
                         </li>                        
                     {% endif %}
-                    {% for i in ensayo_list.paginator.page_range %}
-                        {% if i >= ensayo_list.number|sub:2  and i < ensayo_list.number|add:3  %}
-                            <li class="page-item {% if ensayo_list.number == i %}active{% endif %}">
+                    {% for i in ensayo_listado.paginator.page_range %}
+                        {% if i >= ensayo_listado.number|sub:2  and i < ensayo_listado.number|add:3  %}
+                            <li class="page-item {% if ensayo_listado.number == i %}active{% endif %}">
                                 <a class="page-link" href="?page={{ i }}&search={{ search }}">{{ i }}</a>
                             </li>                        
                         {% endif %}
                     {% endfor %}
-                    {% if ensayo_list.has_next %}
+                    {% if ensayo_listado.has_next %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ ensayo_list.next_page_number }}&search={{ search }}">&raquo;</a>
+                            <a class="page-link" href="?page={{ ensayo_listado.next_page_number }}&search={{ search }}">&raquo;</a>
                         </li>
                     {% else %}
                         <li class="page-item disabled">
