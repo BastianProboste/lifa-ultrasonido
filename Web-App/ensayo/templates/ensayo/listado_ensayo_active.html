@@ -23,7 +23,12 @@
         });
     }
 
-    function abrirFormularioRUT() {
+    function abrirFormularioRUT(ensayoId) {
+        // Actualiza la URL de acción del formulario con el ID del ensayo
+        const form = document.getElementById('form-agregar-rut');
+        form.action = "{% url 'agregar_rut_ensayo' 'ENSAYO_ID' %}".replace('ENSAYO_ID', ensayoId);
+
+        // Muestra el modal
         document.getElementById('modal-agregar-rut').style.display = 'flex';
     }
 
@@ -55,7 +60,7 @@
             <button class="btn btn-outline-success" type="submit">Buscar</button>
         </div>
         <div class="mb-3">
-            <a class="btn btn-primary" href="{% url 'list_ensayo_deactivate' %}" role="button">Ensayos Bloqueados</a>
+            <a class="btn btn-primary" href="{% url 'listado_ensayo_deactivate' %}" role="button">Ensayos Bloqueados</a>
         </div>
     </form>
 </div>
@@ -67,6 +72,7 @@
                 <th width="1%" scope="col">Codigo</th>
                 <th width="1%" scope="col">Nombre</th>
                 <th width="1%" scope="col">Fecha</th>
+                <th width="1%" scope="col">Rut Ensayista</th>
                 <th width="1%" scope="col">Acciones</th>
             </tr>
         </thead>    
@@ -76,7 +82,11 @@
                     <td class="user-data"> {{ ensayo.codigo_ensayo }}</td>
                     <td class="user-data"> {{ ensayo.nombre_ensayo }}</td>
                     <td class="user-data"> {{ ensayo.fecha_ensayo }}</td>
-                    
+                    {% if ensayo.rut_asociado %}
+                        <td class="user-data"> {{ ensayo.rut_asociado }}</td>
+                    {% else %}
+                        <td class="user-data"> Sin Ensayista </td>
+                    {% endif %}
                     <td class="all-lightgray">
                         <a href="{% url 'list_tiempos_ensayo' ensayo.id %}" title="Tiempos" class="user-action">
                             <i class="fa-solid fa-eye"></i>    
@@ -89,10 +99,11 @@
                             <a href="#" onclick="confirmarCambio('{% url 'ensayo_deactivate' ensayo.id %}')" title="Desactivar" class="user-action">
                                 <i class="fas fa-ban"></i>
                             </a>
-                            <a href="#" onclick="abrirFormularioRUT()" title="Agregar Usuario" class="user-action">
+                            <a href="#" onclick="abrirFormularioRUT('{{ ensayo.id }}')" title="Agregar Usuario" class="user-action">
                                 <i class="fa-regular fa-address-book"></i>
                             </a>
                         {% endif %}
+                        
                     </td>
                 </tr>
             {% endfor %}
@@ -141,9 +152,10 @@
         <div class="tarjeta">
             <button class="boton-cerrar" onclick="cerrarFormularioRUT()">×</button>
             <h2 class="titulo-tarjeta">Agregar RUT de Usuario</h2>
-            <form id="form-agregar-rut" class="formulario">
+            <form id="form-agregar-rut" class="formulario" method="POST" action="#">
+                {% csrf_token %}
                 <label for="rut" class="etiqueta">RUT del Usuario:</label>
-                <input type="text" id="rut" name="rut" class="campo" placeholder="Ejemplo: 12.345.678-9" required>
+                <input type="text" id="rut" name="rut" class="campo" placeholder="Ejemplo: 12345678-9" required>
                 <button type="submit" class="boton-enviar">Agregar</button>
             </form>
         </div>

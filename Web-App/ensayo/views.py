@@ -4,8 +4,7 @@ from django.shortcuts import render,redirect
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from ensayo.models import *
 from core.views import *
-
-from django.contrib.auth.models import User 
+from user.models import User
 from extensiones.validacion import *
 from django.core.paginator import Paginator
 from pymongo import ASCENDING
@@ -39,7 +38,7 @@ def listado_ensayo_active(request, page=None, search=""):
     if search:
         consulta["nombre_ensayo"] = {"$regex": search, "$options": "i"}  # Búsqueda insensible a mayúsculas
 
-    # Obtener todos los ensayos activos de MongoDB, ordenados por `fecha_ensayo`
+    # Obtener todos los ensayos activos de MongoDB, ordenados por `fecha_ensayo
     ensayos = ensayos_colleccion.find(consulta).sort("fecha_ensayo", ASCENDING)
 
     # Contar documentos que coinciden con la consulta
@@ -293,52 +292,54 @@ def ensayo_activate(request, ensayo_id):
 
 
 
+# Vista para agregar rut a ensayo
 @login_required
 def agregar_rut_ensayo(request, ensayo_id):
     mongo_db = settings.MONGO_DB
-    ensayos_colleccion = mongo_db.ensayo  # Colección de ensayos
+    ensayos_collection = mongo_db.ensayo  # Colección de ensayos
 
     if request.method == 'POST':
         rut = request.POST.get('rut', '').strip()
+        print(f"RUT recibido: {rut}")  # Debug: Verifica el valor del RUT
 
         # Validar que el RUT no esté vacío
         if not rut:
+            print("Rut no encontrado")
             messages.error(request, "El RUT no puede estar vacío.")
-            return redirect('listado_ensayo_active')  # Redirigir a la listadoa de ensayos
+            return redirect('listado_ensayo_active')
 
         try:
             # Verificar que el RUT exista en la base de datos de Django (modelo User)
-            user = User.objects.get(rut=rut)
+            usuario = User.objects.get(rut=rut)
+            print(f"Usuario encontrado: {usuario}")  # Debug: Verifica el usuario encontrado
 
             # Obtener el ensayo por su _id
-            ensayo = ensayos_colleccion.find_one({"_id": ObjectId(ensayo_id)})
+            ensayo = ensayos_collection.find_one({"_id": ObjectId(ensayo_id)})
             if not ensayo:
+                print("Ensayo no encontrado")  # Debug: Ensayo no encontrado
                 messages.error(request, "Ensayo no encontrado.")
-                return redirect('listado_ensayo_active')  # Redirigir a la listadoa de ensayos
+                return redirect('listado_ensayo_active')
 
-            # Aquí asociamos el RUT al ensayo
-            print("aa")
-            ensayos_colleccion.update_one(
+            # Actualización en MongoDB
+            result = ensayos_collection.update_one(
                 {"_id": ObjectId(ensayo_id)},
-                {"$set": {"rut_asociado": rut}}  # Asociamos el RUT al ensayo
+                {"$set": {"rut_asociado": rut}}
             )
 
+            # Verificación del resultado de la actualización
+            if result.matched_count == 0:
+                print("No se encontró ningún documento para actualizar.")
+            if result.modified_count == 0:
+                print("El documento no fue modificado.")
+
             messages.success(request, f"El RUT {rut} ha sido asociado al ensayo correctamente.")
-            return redirect('listado_ensayo_active')  # Redirigir a la listadoa de ensayos
+            return redirect('listado_ensayo_active')
 
         except User.DoesNotExist:
             # Si no existe el RUT en la base de datos de Django
+            print("El RUT no existe en el sistema")  # Debug: RUT no encontrado en Django
             messages.error(request, "El RUT no existe en el sistema.")
-            return redirect('listado_ensayo_active')  # Redirigir a la listadoa de ensayos
+            return redirect('listado_ensayo_active')
 
     else:
-        return redirect('listado_ensayo_active')  # Si no es una solicitud POST, redirigir
-
-
-    
-
-
-
-
-
-
+        return redirect('listado_ensayo_active')

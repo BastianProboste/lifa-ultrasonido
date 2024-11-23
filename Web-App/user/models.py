@@ -6,4 +6,4 @@ from phonenumber_field.modelfields import PhoneNumberField # type: ignore
 class User(AbstractUser): 
     rut = models.CharField(max_length=11, null=True, blank=False)
     carrera = models.CharField(max_length=30, null=True, blank=True)
-    phone = PhoneNumberField(blank=False, null=True)
+    telefono = PhoneNumberField(blank=False, null=True)

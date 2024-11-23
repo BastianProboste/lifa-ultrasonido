@@ -98,11 +98,11 @@ MONGO_DB = MONGO_CLIENT['consultoria']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Live',
+        'NAME': 'livewaveDB',
         'USER': 'postgres',
-        'PASSWORD': 'benja',
+        'PASSWORD': 'rsk305',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '5433',
     }
 }
 
