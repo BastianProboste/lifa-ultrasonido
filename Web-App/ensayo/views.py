@@ -311,11 +311,11 @@ def ensayo_deactivate(request, ensayo_id):
         )
         #verifica la modificacion
         if resultado.modified_count > 0:
-            return redirect('list_ensayo_active')  
+            return redirect('listado_ensayo_active')  
 
 
     except Exception as e:
-        return redirect('list_ensayo_active')
+        return redirect('listado_ensayo_active')
 
 
 
@@ -353,7 +353,7 @@ def ensayo_activate(request, ensayo_id):
 
 
     except Exception as e:
-        return redirect('list_ensayo_deactivate')
+        return redirect('listado_ensayo_deactivate')
 
 
 
