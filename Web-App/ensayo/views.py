@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render,redirect
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.paginator import Paginator
 from ensayo.models import *
 from core.views import *
 from user.models import User
@@ -30,7 +30,6 @@ def listado_ensayo_active(request, page=None, search=""):
 
     # Número de elementos por página
     num_elemento = 10
-
     # Crear una consulta base para ensayos activos
     consulta = {"estado_ensayo": "Activa"}
 
@@ -52,7 +51,6 @@ def listado_ensayo_active(request, page=None, search=""):
 
     paginator = Paginator(ensayos_con_id, num_elemento)  # Convertir a listadoa para paginar
     ensayo_listado = paginator.get_page(page)
-
     # Renderizar la plantilla
     template_name = 'ensayo/listado_ensayo_active.html'
     print(f"Total ensayos activos encontrados: {total_ensayos}")
@@ -175,6 +173,24 @@ def grafico(request, ensayo_id):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @login_required
 def detalle_tiempo(request, tiempo_id):
     #Conexión a Mongodb
@@ -193,6 +209,32 @@ def detalle_tiempo(request, tiempo_id):
         'tiempo': tiempo,
         
     })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @login_required
 def listado_ensayo_deactivate(request, page=None, search=""):
@@ -248,6 +290,12 @@ def ensayo_main(request):
 
 
 
+
+
+
+
+
+
 @login_required
 def ensayo_deactivate(request, ensayo_id):
     #Conexion a Mongo Db
@@ -263,12 +311,30 @@ def ensayo_deactivate(request, ensayo_id):
         )
         #verifica la modificacion
         if resultado.modified_count > 0:
-            return redirect('listado_ensayo_active')  
-        else:
-            return render(request, 'ensayo/error.html', {'mensaje': 'No se encontró el ensayo o ya estaba desactivado.'})
+            return redirect('list_ensayo_active')  
+
 
     except Exception as e:
-        return render(request, 'ensayo/error.html', {'mensaje': 'Error al desactivar el ensayo: ' + str(e)})
+        return redirect('list_ensayo_active')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @login_required
 def ensayo_activate(request, ensayo_id):
@@ -283,12 +349,28 @@ def ensayo_activate(request, ensayo_id):
         )
 
         if resultado.modified_count > 0:
-            return redirect('listado_ensayo_active')  # Redirigir a la listadoa de ensayos activos
-        else:
-            return render(request, 'ensayo/error.html', {'mensaje': 'No se encontró el ensayo o ya estaba desactivado.'})
+            return redirect('listado_ensayo_deactivate')  # Redirigir a la listadoa de ensayos activos
+
 
     except Exception as e:
-        return render(request, 'ensayo/error.html', {'mensaje': 'Error al desactivar el ensayo: ' + str(e)})
+        return redirect('list_ensayo_deactivate')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

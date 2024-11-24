@@ -100,7 +100,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'livewaveDB',
         'USER': 'postgres',
+<<<<<<< Updated upstream
         'PASSWORD': 'rsk305',
+=======
+        'PASSWORD': 'benja0702',
+>>>>>>> Stashed changes
         'HOST': 'localhost',
         'PORT': '5433',
     }
