@@ -11,7 +11,6 @@ from pymongo import ASCENDING
 from django.conf import settings
 from bson.objectid import ObjectId
 from django.shortcuts import render
-from django.http import Http404
 from django.conf import settings
 
 
@@ -144,14 +143,14 @@ def grafico(request, ensayo_id):
     elif opcion == 'opcion2':
         # Opción 2: (Puedes modificar los datos según esta opción)
         datos = [
-            {"campo1": tiempo.get("valor"), "campo2": tiempo.get("fuerza")}
+            {"campo1": tiempo.get("valor"), "campo2": tiempo.get("time_of_fly")}
             for tiempo in ensayo.get("tiempos", [])
         ]
         titulo = "Gráfico de Tiempo vs Fuerza (Opción 2)"
     elif opcion == 'opcion3':
         # Opción 3: Modifica los datos según esta opción
         datos = [
-            {"campo1": tiempo.get("valor"), "campo2": tiempo.get("fuerza")}
+            {"campo1": tiempo.get("valor"), "campo2": tiempo.get("stress")}
             for tiempo in ensayo.get("tiempos", [])
         ]
         titulo = "Gráfico de Tiempo vs Fuerza (Opción 3)"
@@ -169,26 +168,6 @@ def grafico(request, ensayo_id):
     }
 
     return render(request, 'ensayo/grafico.html', datos_grafico)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @login_required
@@ -209,31 +188,6 @@ def detalle_tiempo(request, tiempo_id):
         'tiempo': tiempo,
         
     })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @login_required
@@ -289,13 +243,6 @@ def ensayo_main(request):
    
 
 
-
-
-
-
-
-
-
 @login_required
 def ensayo_deactivate(request, ensayo_id):
     #Conexion a Mongo Db
@@ -321,21 +268,6 @@ def ensayo_deactivate(request, ensayo_id):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @login_required
 def ensayo_activate(request, ensayo_id):
     mongo_db = settings.MONGO_DB
@@ -354,24 +286,6 @@ def ensayo_activate(request, ensayo_id):
 
     except Exception as e:
         return redirect('listado_ensayo_deactivate')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # Vista para agregar rut a ensayo
