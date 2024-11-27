@@ -1,9 +1,14 @@
+{% extends 'core/module.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/grafico.css' %}">
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>{{ titulo }}</title>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.0/dist/echarts.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
 </head>
 <body>
     <h1>{{ titulo }}</h1>
@@ -16,15 +21,25 @@
         <button type="submit" name="opcion" value="opcion1">Gráfico 1</button>
         <button type="submit" name="opcion" value="opcion2">Gráfico 2</button>
         <button type="submit" name="opcion" value="opcion3">Gráfico 3</button>
-    </form>
 
-    <div id="grafico" style="width: 600px; height: 400px;"></div>
+    </form>
+    <a href="{% url 'listado_ensayo_active' %}" class="boton-volver">Volver a Lista de Ensayos</a>
+    <div id="grafico" style="width: 800px; height:600px;"></div>
+
+
 
     <script>
         // Inicializa ECharts en el contenedor
         var grafico = echarts.init(document.getElementById('grafico'));
 
-        // Configuración del gráfico
+        var ejeX = {{ eje_x|safe }};
+        var valoresY = {{ valores_y|safe }};
+
+        var minY = Math.min(...valoresY);
+        var maxY = Math.max(...valoresY);
+
+        
+        //Grafico
         var option = {
             title: {
                 text: "{{ titulo }}"
@@ -32,19 +47,45 @@
             tooltip: {},
             xAxis: {
                 type: 'category',
-                data: {{ eje_x|safe }}  // Datos del eje X
+                data: ejeX  // Datos del eje X
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
+                min: minY,  // Escala maxima automatica
+                max: maxY   // Escala minima automatica
             },
             series: [{
                 type: 'line',  // Tipo de gráfico: líneas
-                data: {{ valores_y|safe }}  // Datos del eje Y
-            }]
+                data: valoresY  // Datos del eje Y
+            }],
+            // Configuración de dataZoom solo para el eje Y
+            dataZoom: [
+                {
+                    type: 'inside',  //Usar scroll del mouse en eje Y
+                    yAxisIndex: 0    
+                },
+                {
+                    type: 'slider',  //slider para el control de visualizacion de datos en el eje Y
+                    show: true,
+                    yAxisIndex: 0    
+                },
+                {
+                    type: 'inside',  //Usar scroll del mouse en eje X
+                    xAxisIndex: 0    
+                },
+                {
+                    type: 'slider',  //slider para el control de visualizacion de datos en el eje X
+                    show: true,
+                    xAxisIndex: 0    
+                }
+            ]
+            
         };
 
         // Aplica la configuración al gráfico
         grafico.setOption(option);
+
     </script>
 </body>
 </html>
+{% endblock %}

@@ -407,3 +407,99 @@ transform: scale(1.05);
 .clear-search-button:focus {
 outline: none;
 }
+
+
+
+
+
+/* Tarjeta donde se ingresa el RUT */
+.tarjeta {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: entrada 0.3s ease;
+    position: relative;
+}
+
+@keyframes entrada {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Botón para cerrar el modal */
+.boton-cerrar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #2e75c2;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.boton-cerrar:hover {
+    color: #e74c3c;
+}
+
+/* Título de la tarjeta */
+.titulo-tarjeta {
+    font-size: 1.6rem;
+    color: #2e75c2;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+/* Estilos del formulario */
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Etiquetas de los campos */
+.etiqueta {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* Campo de entrada de texto */
+.campo {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.campo:focus {
+    border-color: #2e75c2;
+    box-shadow: 0 0 5px rgba(46, 117, 194, 0.3);
+}
+
+/* Botón de enviar */
+.boton-enviar {
+    padding: 12px;
+    background-color: #2e75c2;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.boton-enviar:hover {
+    background-color: #1a5f8c;
+}

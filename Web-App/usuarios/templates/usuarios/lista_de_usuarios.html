@@ -1,8 +1,8 @@
 {% extends 'core/module.html' %}
 {% load static %}
-{% block title %}Modulo Usuario{% endblock %}
+{% block title %}Módulo Usuario{% endblock %}
 {% block active_users %}active{% endblock %}
-{% block h2 %}Modulo de usuarios > Lista de usuarios{% endblock %}
+{% block h2 %}Módulo de usuarios > Lista de usuarios{% endblock %}
 {% block content %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <h1 class="title">Lista de Usuarios</h1>
@@ -10,7 +10,7 @@
     <form method="get" action="">
         <!-- Barra de búsqueda -->
         <input type="text" name="search" id="buscador" class="search-bar" placeholder="Buscar..."
-               value="{{ datos.search_query }}">
+               value="{{ datos.consulta_busqueda }}">
 
         <!-- Botón de búsqueda (aún lo dejamos para compatibilidad) -->
         <button type="submit" class="search-bar-button">Buscar</button>
@@ -18,13 +18,13 @@
         <!-- Filtro de rol con onchange para enviar automáticamente el formulario -->
         <select name="role" id="rolBuscador" class="search-selector" onchange="this.form.submit()">
             <option value="">Filtrar Rol</option>
-            <option value="Docente" {% if datos.role_filter == "Docente" %}selected{% endif %}>Docente</option>
-            <option value="Estudiante" {% if datos.role_filter == "Estudiante" %}selected{% endif %}>Estudiante</option>
+            <option value="Docente" {% if datos.filtro_rol == "Docente" %}selected{% endif %}>Docente</option>
+            <option value="Estudiante" {% if datos.filtro_rol == "Estudiante" %}selected{% endif %}>Estudiante</option>
         </select>
     </form>
 
     <!-- Mostrar el botón de limpiar búsqueda solo si hay un filtro activo -->
-    {% if datos.search_query or datos.role_filter %}
+    {% if datos.consulta_busqueda or datos.filtro_rol %}
         <a href="?page=1" class="clear-search-button">Limpiar búsqueda</a>
     {% endif %}
 </div>
@@ -43,29 +43,29 @@
                 </tr>
             </thead>
             <tbody>
-                {% for user in datos.usuarios %}
+                {% for usuario in datos.usuarios %}
                 <tr class="table-row">
-                    <td class="table-cell">{{ user.username }}</td>
-                    <td class="table-cell">{{ user.rut }}</td>
-                    <td class="table-cell">{{ user.first_name }}</td>
-                    <td class="table-cell">{{ user.last_name }}</td>
-                    <td class="table-cell">{{ user.carrera }}</td>
+                    <td class="table-cell">{{ usuario.username }}</td>
+                    <td class="table-cell">{{ usuario.rut }}</td>
+                    <td class="table-cell">{{ usuario.first_name }}</td>
+                    <td class="table-cell">{{ usuario.last_name }}</td>
+                    <td class="table-cell">{{ usuario.carrera }}</td>
                     <td class="table-cell">
-                        {% if user.is_staff %}
+                        {% if usuario.is_staff %}
                             Docente
                         {% else %}
                             Estudiante
                         {% endif %}
                     </td>
                     <td class="table-cell">
-                        <a href="#" class="icon" onclick="showUserDetails({{ user.id }})">
+                        <a href="#" class="icon" onclick="mostrarDetallesUsuario({{ usuario.id }})">
                             <i class="fa-regular fa-eye"></i>
                         </a>
-                        <a href="{% url 'edit_user' user.id %}" class="icon">
+                        <a href="{% url 'editar_usuario' usuario.id %}" class="icon">
                             <i class="fa-regular fa-pen-to-square"></i>
                         <!-- Verificar si el usuario actual es el mismo que el usuario que se muestra -->
-                        {% if user != request.user %}
-                            <a href="#" class="icon" onclick="showConfirmModal('{{ user.username }}', '{% url 'delete_user' user.id %}')">
+                        {% if usuario != request.user %}
+                            <a href="#" class="icon" onclick="showConfirmModal('{{ usuario.username }}', '{% url 'eliminar_usuario' usuario.id %}')">
                                 <i class="fas fa-ban"></i>
                             </a>
                         {% endif %}
@@ -76,16 +76,16 @@
         </table>
         {% include 'core/messages.html' %}
     </div>
-    <div id="userDetailsModal" class="modal">
+    <div id="detallesUsuarioModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="close-btn" onclick="cerrar_Modal()">&times;</span>
             <h3 class="card-title" id="modalUserName"></h3>
             <p><strong>RUT:</strong> <span id="modalRut"></span></p>
             <p><strong>Nombre:</strong> <span id="modalFirstName"></span></p>
             <p><strong>Apellido:</strong> <span id="modalLastName"></span></p>
             <p><strong>Email:</strong> <span id="modalEmail"></span></p>
             <p><strong>Rol:</strong> <span id="modalRol"></span></p>
-            <p><strong>Teléfono:</strong> <span id="modalPhone"></span></p>
+            <p><strong>Teléfono:</strong> <span id="modalTelefono"></span></p>
             <p id="modalCarrera" style="display: none;">
                 <strong>Carrera:</strong> <span id="modalCarreraValue"></span>
             </p>
@@ -99,24 +99,23 @@
 <!-- Paginación -->
 <div class="pagination">
     {% if datos.usuarios.has_previous %}
-        <a href="?page=1&search={{ datos.search_query }}&role={{ datos.role_filter }}" class="btn">«</a>
-        <a href="?page={{ datos.usuarios.previous_page_number }}&search={{ datos.search_query }}&role={{ datos.role_filter }}" class="btn">‹</a>
+        <a href="?page=1&search={{ datos.consulta_busqueda }}&role={{ datos.filtro_rol }}" class="btn">«</a>
+        <a href="?page={{ datos.usuarios.previous_page_number }}&search={{ datos.consulta_busqueda }}&role={{ datos.filtro_rol }}" class="btn">‹</a>
     {% endif %}
 
     {% for i in datos.usuarios.paginator.page_range %}
         {% if datos.usuarios.number == i %}
             <span>{{ i }}</span>
         {% else %}
-            <a href="?page={{ i }}&search={{ datos.search_query }}&role={{ datos.role_filter }}" class="btn">{{ i }}</a>
+            <a href="?page={{ i }}&search={{ datos.consulta_busqueda }}&role={{ datos.filtro_rol }}" class="btn">{{ i }}</a>
         {% endif %}
     {% endfor %}
 
     {% if datos.usuarios.has_next %}
-        <a href="?page={{ datos.usuarios.next_page_number }}&search={{ datos.search_query }}&role={{ datos.role_filter }}" class="btn">›</a>
-        <a href="?page={{ datos.usuarios.paginator.num_pages }}&search={{ datos.search_query }}&role={{ datos.role_filter }}" class="btn">»</a>
+        <a href="?page={{ datos.usuarios.next_page_number }}&search={{ datos.consulta_busqueda }}&role={{ datos.filtro_rol }}" class="btn">›</a>
+        <a href="?page={{ datos.usuarios.paginator.num_pages }}&search={{ datos.consulta_busqueda }}&role={{ datos.filtro_rol }}" class="btn">»</a>
     {% endif %}
 </div>
-
 
 <!-- Modal de confirmación -->
 <div id="confirmModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background-color:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">

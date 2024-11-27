@@ -33,7 +33,7 @@
 <header class='mb-5'>
     <div class="row">
         <div class="titu-mein" >        
-            <h2 class='h2 medium text-blue'>Listado de ensayos</h2>
+            <h2 class='h2 medium text-blue'>Listado de ensayos Desactivados</h2>
         </div>
     </div>
 
@@ -55,12 +55,10 @@
             <button class="btn btn-outline-success" type="submit">Buscar</button>
         </div>
         <div class="mb-3">
-            <a class="btn btn-primary" href="{% url 'list_ensayo_deactivate' %}" role="button">Ensayos Bloqueados</a>
+            <a class="btn btn-primary" href="{% url 'listado_ensayo_active' %}" role="button">Ensayos Activos</a>
         </div>
     </form>
         
-
-    
 </div>
 
 
@@ -76,22 +74,19 @@
             </tr>
         </thead>    
         <tbody>
-            {% for ensayo in ensayo_list %}
+            {% for ensayo in ensayo_listado %}
                 <tr >
                     <td class="user-data"> {{ ensayo.codigo_ensayo }}</td>
                     <td class="user-data"> {{ ensayo.nombre_ensayo }}</td>
                     <td class="user-data"> {{ ensayo.fecha_ensayo }}</td>
                     
                     <td class="all-lightgray">
-                        <a href="{% url 'list_tiempos_ensayo' ensayo.id %}" title="Tiempos" class="user-action">
-                            <i class="fa-solid fa-eye"></i>     
+                        <a href="{% url 'listado_tiempos_ensayo' ensayo.id %}" title="Tiempos" class="user-action">
+                            <i class="fa-solid fa-eye"></i> 
                         </a>
                         &nbsp;
-                        <a href="#" onclick="confirmarCambio('{% url 'ensayo_deactivate' ensayo.id %}')" title="Desactivar" class="user-action">
+                        <a href="#" onclick="confirmarCambio('{% url 'ensayo_activate' ensayo.id %}')" title="Activar" class="user-action">
                             <i class="fas fa-ban"></i>
-                        </a>
-                        <a href="{% url 'grafico' ensayo.id %}" title="Gráfico" class="user-action">
-                            <i class="fa-solid fa-chart-bar"></i>     
                         </a>
                     </td>
 
@@ -102,13 +97,13 @@
     </table>
     
 <!-- Paginación -->
-{% if ensayo_list.paginator.num_pages > 1 %}
+{% if ensayo_listado.paginator.num_pages > 1 %}
     <div class="d-flex">
         <nav aria-label="Page navigation example" class="ms-auto">
             <ul class="pagination pagination-table">
-                {% if ensayo_list.has_previous %}
+                {% if ensayo_listado.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ ensayo_list.previous_page_number }}&search={{ search }}" aria-label="Previous">
+                        <a class="page-link" href="?page={{ ensayo_listado.previous_page_number }}&search={{ search }}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -117,16 +112,16 @@
                         <a class="page-link" href="#" tabindex="-1">&laquo;</a>
                     </li>                        
                 {% endif %}
-                {% for i in ensayo_list.paginator.page_range %}
-                    {% if i >= ensayo_list.number|sub:2  and i < ensayo_list.number|add:3  %}
-                        <li class="page-item {% if ensayo_list.number == i %}active{% endif %}">
+                {% for i in ensayo_listado.paginator.page_range %}
+                    {% if i >= ensayo_listado.number|sub:2  and i < ensayo_listado.number|add:3  %}
+                        <li class="page-item {% if ensayo_listado.number == i %}active{% endif %}">
                             <a class="page-link" href="?page={{ i }}&search={{ search }}">{{ i }}</a>
                         </li>                        
                     {% endif %}
                 {% endfor %}
-                {% if ensayo_list.has_next %}
+                {% if ensayo_listado.has_next %}
                     <li class="page-item ">
-                        <a class="page-link" href="?page={{ ensayo_list.next_page_number }}&search={{ search }}">&raquo;</a>
+                        <a class="page-link" href="?page={{ ensayo_listado.next_page_number }}&search={{ search }}">&raquo;</a>
                     </li>
                 {% else %}
                     <li class="page-item disabled">

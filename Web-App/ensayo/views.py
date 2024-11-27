@@ -1,72 +1,62 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.shortcuts import render,redirect,get_object_or_404
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.http import HttpResponse
+from django.shortcuts import render,redirect
+from django.core.paginator import Paginator
 from ensayo.models import *
-from datetime import datetime,timedelta
-from django.db.models import Avg, Count, Q
-#from registration.models import Profile
-from django.urls import reverse_lazy
 from core.views import *
-# Create your views here.
-import xlwt
-import pandas as pd
-
+from user.models import User
 from extensiones.validacion import *
 from django.core.paginator import Paginator
 from pymongo import ASCENDING
 from django.conf import settings
 from bson.objectid import ObjectId
 from django.shortcuts import render
-from django.http import Http404
 from django.conf import settings
 
 
-
-def list_ensayo_active(request, page=None, search=""):
+@login_required
+def listado_ensayo_active(request, page=None, search=""):
     # Conectar a MongoDB
     mongo_db = settings.MONGO_DB
-    ensayos_collection = mongo_db.ensayo  # Colección de ensayos
+    ensayos_colleccion = mongo_db.ensayo  # Colección de ensayos
 
     # Obtener la página actual
     page = request.GET.get('page', 1)
 
     # Obtener la cadena de búsqueda desde el parámetro GET
+
     search = request.GET.get('search', '').strip()  # Limpiar la búsqueda
 
     # Número de elementos por página
     num_elemento = 10
-
     # Crear una consulta base para ensayos activos
-    query = {"estado_ensayo": "Activa"}
+    consulta = {"estado_ensayo": "Activa"}
 
     # Si hay una búsqueda, agregarla a la consulta
     if search:
-        query["nombre_ensayo"] = {"$regex": search, "$options": "i"}  # Búsqueda insensible a mayúsculas
+        consulta["nombre_ensayo"] = {"$regex": search, "$options": "i"}  # Búsqueda insensible a mayúsculas
 
-    # Obtener todos los ensayos activos de MongoDB, ordenados por `fecha_ensayo`
-    ensayo_all = ensayos_collection.find(query).sort("fecha_ensayo", ASCENDING)
+    # Obtener todos los ensayos activos de MongoDB, ordenados por `fecha_ensayo
+    ensayos = ensayos_colleccion.find(consulta).sort("fecha_ensayo", ASCENDING)
 
     # Contar documentos que coinciden con la consulta
-    total_ensayos = ensayos_collection.count_documents(query)
+    total_ensayos = ensayos_colleccion.count_documents(consulta)
 
     # Paginación
     ensayos_con_id = []
-    for ensayo in ensayo_all:
+    for ensayo in ensayos:
         ensayo['id'] = str(ensayo['_id'])  # Convertir ObjectId a cadena
         ensayos_con_id.append(ensayo)
 
-    paginator = Paginator(ensayos_con_id, num_elemento)  # Convertir a lista para paginar
-    ensayo_list = paginator.get_page(page)
-
+    paginator = Paginator(ensayos_con_id, num_elemento)  # Convertir a listadoa para paginar
+    ensayo_listado = paginator.get_page(page)
     # Renderizar la plantilla
-    template_name = 'ensayo/list_ensayo_active.html'
+    template_name = 'ensayo/listado_ensayo_active.html'
     print(f"Total ensayos activos encontrados: {total_ensayos}")
-    print(f"query: {search}")
+    print(f"consulta: {search}")
 
     return render(request, template_name, {
-        'ensayo_list': ensayo_list,
+        'ensayo_listado': ensayo_listado,
         'paginator': paginator,
         'page': page,
         'search': search,
@@ -74,11 +64,11 @@ def list_ensayo_active(request, page=None, search=""):
     })
 
 
-
-def list_tiempos_ensayo(request, ensayo_id, page=None, search=""):
+@login_required
+def listado_tiempos_ensayo(request, ensayo_id, page=None, search=""):
     # Conectar a MongoDB
     mongo_db = settings.MONGO_DB
-    ensayos_collection = mongo_db.ensayo  # Colección de ensayos
+    ensayos_colleccion = mongo_db.ensayo  # Colección de ensayos
 
     # Obtener la página actual
     page = request.GET.get('page', 1)
@@ -93,7 +83,7 @@ def list_tiempos_ensayo(request, ensayo_id, page=None, search=""):
 
     # Intentar obtener el ensayo por su _id
     try:
-        ensayo = ensayos_collection.find_one({"_id": ObjectId(ensayo_id)})
+        ensayo = ensayos_colleccion.find_one({"_id": ObjectId(ensayo_id)})
     except Exception as e:
         return render(request, 'ensayo/error.html', {'mensaje': 'Error al buscar el ensayo.'})
 
@@ -110,11 +100,11 @@ def list_tiempos_ensayo(request, ensayo_id, page=None, search=""):
         tiempos = [tiempo for tiempo in tiempos if search.lower() in str(tiempo.get('valor', '')).lower()]
 
     # Paginación
-    start_idx = (int(page) - 1) * num_elementos
-    end_idx = start_idx + num_elementos
-    tiempos_paginados = tiempos[start_idx:end_idx]
+    inicio_index = (int(page) - 1) * num_elementos
+    end_idx = inicio_index + num_elementos
+    tiempos_paginados = tiempos[inicio_index:end_idx]
 
-    template_name = 'ensayo/list_tiempos_ensayo.html'
+    template_name = 'ensayo/listado_tiempos_ensayo.html'
     return render(request, template_name, {
         'ensayo': ensayo,
         'tiempos': tiempos_paginados,
@@ -122,13 +112,16 @@ def list_tiempos_ensayo(request, ensayo_id, page=None, search=""):
         'page': page,      
     })
 
+@login_required
 def grafico(request, ensayo_id):
+    #Conexión a Mongo
     mongo_db = settings.MONGO_DB
-    ensayos_collection = mongo_db.ensayo
+    #Coleccion a usar
+    ensayos_colleccion = mongo_db.ensayo
 
     # Obtener el ensayo por su _id
     try:
-        ensayo = ensayos_collection.find_one({"_id": ObjectId(ensayo_id)})
+        ensayo = ensayos_colleccion.find_one({"_id": ObjectId(ensayo_id)})
     except Exception as e:
         return render(request, 'ensayo/error.html', {'mensaje': 'Error al buscar el ensayo.'})
 
@@ -150,14 +143,14 @@ def grafico(request, ensayo_id):
     elif opcion == 'opcion2':
         # Opción 2: (Puedes modificar los datos según esta opción)
         datos = [
-            {"campo1": tiempo.get("valor"), "campo2": tiempo.get("fuerza")}
+            {"campo1": tiempo.get("valor"), "campo2": tiempo.get("time_of_fly")}
             for tiempo in ensayo.get("tiempos", [])
         ]
         titulo = "Gráfico de Tiempo vs Fuerza (Opción 2)"
     elif opcion == 'opcion3':
         # Opción 3: Modifica los datos según esta opción
         datos = [
-            {"campo1": tiempo.get("valor"), "campo2": tiempo.get("fuerza")}
+            {"campo1": tiempo.get("valor"), "campo2": tiempo.get("stress")}
             for tiempo in ensayo.get("tiempos", [])
         ]
         titulo = "Gráfico de Tiempo vs Fuerza (Opción 3)"
@@ -177,14 +170,15 @@ def grafico(request, ensayo_id):
     return render(request, 'ensayo/grafico.html', datos_grafico)
 
 
-
-
-
+@login_required
 def detalle_tiempo(request, tiempo_id):
+    #Conexión a Mongodb
     mongo_db = settings.MONGO_DB
-    ensayos_collection = mongo_db.ensayo  
+    #Coleccion a usar
+    ensayos_colleccion = mongo_db.ensayo  
 
-    ensayo = ensayos_collection.find_one({"tiempos.tiempo_id": tiempo_id})
+    #ensayo buscado por id
+    ensayo = ensayos_colleccion.find_one({"tiempos.tiempo_id": tiempo_id})
 
     tiempo = next((t for t in ensayo['tiempos'] if t['tiempo_id'] == tiempo_id), None)
 
@@ -196,41 +190,45 @@ def detalle_tiempo(request, tiempo_id):
     })
 
 
-def list_ensayo_deactivate(request, page=None, search=""):
+@login_required
+def listado_ensayo_deactivate(request, page=None, search=""):
+    #Conexion a Mongodb
     mongo_db = settings.MONGO_DB
-    ensayos_collection = mongo_db.ensayo 
+
+    #Coleccion a utilizar
+    ensayos_colleccion = mongo_db.ensayo 
 
     page = request.GET.get('page', 1)
 
     search = request.GET.get('search', '').strip()  
   
     num_elemento = 10
-
-    query = {"estado_ensayo": "Deactivate"}
+    #ensayos desactivados
+    consulta = {"estado_ensayo": "Deactivate"}
 
 
     if search:
-        query["nombre_ensayo"] = {"$regex": search, "$options": "i"}  
+        consulta["nombre_ensayo"] = {"$regex": search, "$options": "i"}  
+    #Todos los ensayos desactivados ordenados por fecha de ensayo
+    ensayos = ensayos_colleccion.find(consulta).sort("fecha_ensayo", ASCENDING)
 
-    ensayo_all = ensayos_collection.find(query).sort("fecha_ensayo", ASCENDING)
 
-
-    total_ensayos = ensayos_collection.count_documents(query)
+    total_ensayos = ensayos_colleccion.count_documents(consulta)
 
     ensayos_con_id = []
-    for ensayo in ensayo_all:
+    for ensayo in ensayos:
         ensayo['id'] = str(ensayo['_id'])  
         ensayos_con_id.append(ensayo)
 
     paginator = Paginator(ensayos_con_id, num_elemento)  
-    ensayo_list = paginator.get_page(page)
+    ensayo_listado = paginator.get_page(page)
 
-    template_name = 'ensayo/list_ensayo_deactivate.html'
+    template_name = 'ensayo/listado_ensayo_deactivate.html'
     print(f"Total ensayos desactivados encontrados: {total_ensayos}")
-    print(f"query: {search}")
+    print(f"consulta: {search}")
 
     return render(request, template_name, {
-        'ensayo_list': ensayo_list,
+        'ensayo_listado': ensayo_listado,
         'paginator': paginator,
         'page': page,
         'search': search,
@@ -238,64 +236,106 @@ def list_ensayo_deactivate(request, page=None, search=""):
     })
 
 
-'''@login_required'''
+@login_required
 def ensayo_main(request):
-    #profiles = Profile.objects.get(user_id = request.user.id)
-    #check_profile_ensayo(request, profiles)
     template_name = 'ensayo/ensayo_main.html'
     return render(request,template_name,{})
    
 
 
-'''@login_required'''
-
+@login_required
 def ensayo_deactivate(request, ensayo_id):
+    #Conexion a Mongo Db
     mongo_db = settings.MONGO_DB
-    ensayos_collection = mongo_db.ensayo  
+    #Coleccion a utilizar
+    ensayos_colleccion = mongo_db.ensayo  
 
     try:
-        result = ensayos_collection.update_one(
+        #Intenta cambiar estado de ensayo por su id
+        resultado = ensayos_colleccion.update_one(
             {"_id": ObjectId(ensayo_id)},
             {"$set": {"estado_ensayo": "Deactivate"}}
         )
+        #verifica la modificacion
+        if resultado.modified_count > 0:
+            return redirect('listado_ensayo_active')  
 
-        if result.modified_count > 0:
-            return redirect('list_ensayo_active')  
-        else:
-            return render(request, 'ensayo/error.html', {'mensaje': 'No se encontró el ensayo o ya estaba desactivado.'})
 
     except Exception as e:
-        return render(request, 'ensayo/error.html', {'mensaje': 'Error al desactivar el ensayo: ' + str(e)})
+        return redirect('listado_ensayo_active')
 
 
-'''@login_required'''
+
+
+
+@login_required
 def ensayo_activate(request, ensayo_id):
     mongo_db = settings.MONGO_DB
-    ensayos_collection = mongo_db.ensayo  # Colección de ensayos
+    ensayos_colleccion = mongo_db.ensayo  # Colección de ensayos
 
     # Intentar actualizar el ensayo por su _id
     try:
-        result = ensayos_collection.update_one(
+        resultado = ensayos_colleccion.update_one(
             {"_id": ObjectId(ensayo_id)},
             {"$set": {"estado_ensayo": "Activa"}}
         )
 
-        if result.modified_count > 0:
-            return redirect('list_ensayo_active')  # Redirigir a la lista de ensayos activos
-        else:
-            return render(request, 'ensayo/error.html', {'mensaje': 'No se encontró el ensayo o ya estaba desactivado.'})
+        if resultado.modified_count > 0:
+            return redirect('listado_ensayo_deactivate')  # Redirigir a la listadoa de ensayos activos
+
 
     except Exception as e:
-        return render(request, 'ensayo/error.html', {'mensaje': 'Error al desactivar el ensayo: ' + str(e)})
+        return redirect('listado_ensayo_deactivate')
 
 
+# Vista para agregar rut a ensayo
+@login_required
+def agregar_rut_ensayo(request, ensayo_id):
+    mongo_db = settings.MONGO_DB
+    ensayos_collection = mongo_db.ensayo  # Colección de ensayos
 
+    if request.method == 'POST':
+        rut = request.POST.get('rut', '').strip()
+        print(f"RUT recibido: {rut}")  # Debug: Verifica el valor del RUT
 
+        # Validar que el RUT no esté vacío
+        if not rut:
+            print("Rut no encontrado")
+            messages.error(request, "El RUT no puede estar vacío.")
+            return redirect('listado_ensayo_active')
 
-    
+        try:
+            # Verificar que el RUT exista en la base de datos de Django (modelo User)
+            usuario = User.objects.get(rut=rut)
+            print(f"Usuario encontrado: {usuario}")  # Debug: Verifica el usuario encontrado
 
+            # Obtener el ensayo por su _id
+            ensayo = ensayos_collection.find_one({"_id": ObjectId(ensayo_id)})
+            if not ensayo:
+                print("Ensayo no encontrado")  # Debug: Ensayo no encontrado
+                messages.error(request, "Ensayo no encontrado.")
+                return redirect('listado_ensayo_active')
 
+            # Actualización en MongoDB
+            result = ensayos_collection.update_one(
+                {"_id": ObjectId(ensayo_id)},
+                {"$set": {"rut_asociado": rut}}
+            )
 
+            # Verificación del resultado de la actualización
+            if result.matched_count == 0:
+                print("No se encontró ningún documento para actualizar.")
+            if result.modified_count == 0:
+                print("El documento no fue modificado.")
 
+            messages.success(request, f"El RUT {rut} ha sido asociado al ensayo correctamente.")
+            return redirect('listado_ensayo_active')
 
+        except User.DoesNotExist:
+            # Si no existe el RUT en la base de datos de Django
+            print("El RUT no existe en el sistema")  # Debug: RUT no encontrado en Django
+            messages.error(request, "El RUT no existe en el sistema.")
+            return redirect('listado_ensayo_active')
 
+    else:
+        return redirect('listado_ensayo_active')

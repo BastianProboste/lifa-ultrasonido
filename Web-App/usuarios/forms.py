@@ -10,7 +10,7 @@ class CustomAddUserForm(UserCreationForm):
         User = get_user_model()
         model = User
         
-        fields = ['username', 'rut', 'first_name', 'last_name', 'carrera', 'phone', 'email', 'is_staff']
+        fields = ['username', 'rut', 'first_name', 'last_name', 'carrera', 'telefono', 'email', 'is_staff']
 
     password1 = forms.CharField(required=False)
     password2 = forms.CharField(required=False)
