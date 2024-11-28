@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from django.core.paginator import Paginator
 from ensayo.models import *
 from core.views import *
@@ -12,6 +12,8 @@ from django.conf import settings
 from bson.objectid import ObjectId
 from django.shortcuts import render
 from django.conf import settings
+from extensiones.validacion import *
+from django.http import JsonResponse
 
 
 @login_required
@@ -298,6 +300,10 @@ def agregar_rut_ensayo(request, ensayo_id):
         rut = request.POST.get('rut', '').strip()
         print(f"RUT recibido: {rut}")  # Debug: Verifica el valor del RUT
 
+        if not validar_rut(rut):
+            messages.error(request, "El rut no ha sido ingresado correctamente, recuerde: sin puntos y con guion")
+            return redirect('listado_ensayo_active')
+
         # Validar que el RUT no esté vacío
         if not rut:
             print("Rut no encontrado")
@@ -306,7 +312,7 @@ def agregar_rut_ensayo(request, ensayo_id):
 
         try:
             # Verificar que el RUT exista en la base de datos de Django (modelo User)
-            usuario = User.objects.get(rut=rut)
+            usuario = User.objects.filter(is_active=True)
             print(f"Usuario encontrado: {usuario}")  # Debug: Verifica el usuario encontrado
 
             # Obtener el ensayo por su _id
@@ -339,3 +345,29 @@ def agregar_rut_ensayo(request, ensayo_id):
 
     else:
         return redirect('listado_ensayo_active')
+    
+
+def detalles_usuario_por_rut(request, rut):
+    #Verificar si el usuario existe
+    try:
+        usuario = User.objects.get(rut=rut, is_active=True)
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'Usuario no encontrado o inactivo'}, status=404)
+
+    # Establecer variables para rol dependiendo si usuario es staff
+    if usuario.is_staff:
+        rol = "Docente"
+    else:
+        rol = "Estudiante"
+    # Creación de diccionario de datos
+    datos = {
+        "username": usuario.username,
+        "first_name": usuario.first_name,
+        "last_name": usuario.last_name,
+        "email": usuario.email,
+        "rut": usuario.rut,
+        "rol": rol,
+        "carrera": usuario.carrera,
+        "telefono": str(usuario.telefono)
+    }
+    return JsonResponse(datos)

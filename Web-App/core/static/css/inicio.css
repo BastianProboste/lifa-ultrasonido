@@ -1,0 +1,57 @@
+
+h1 {
+    text-align: center;
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 40px;
+}
+.title {
+    margin-top: 2rem;
+    font-size: 39px; 
+    font-weight: bold; 
+    color: #035bb9;
+    margin-bottom: 15px; 
+    text-align: center; 
+    letter-spacing: 1px; 
+    text-transform: none;
+}
+.button-container {
+    margin-top: 4rem;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.custom-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 300px;
+    background-color: white;
+    color: #007bff;
+    text-decoration: none;
+    border: 4px solid #007bff;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.custom-button:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+.custom-button span {
+    font-size: 24px;
+    font-weight: bold;
+}
