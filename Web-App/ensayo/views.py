@@ -54,8 +54,6 @@ def listado_ensayo_active(request, page=None, search=""):
     ensayo_listado = paginator.get_page(page)
     # Renderizar la plantilla
     template_name = 'ensayo/listado_ensayo_active.html'
-    print(f"Total ensayos activos encontrados: {total_ensayos}")
-    print(f"consulta: {search}")
 
     return render(request, template_name, {
         'ensayo_listado': ensayo_listado,
@@ -226,8 +224,6 @@ def listado_ensayo_deactivate(request, page=None, search=""):
     ensayo_listado = paginator.get_page(page)
 
     template_name = 'ensayo/listado_ensayo_deactivate.html'
-    print(f"Total ensayos desactivados encontrados: {total_ensayos}")
-    print(f"consulta: {search}")
 
     return render(request, template_name, {
         'ensayo_listado': ensayo_listado,
@@ -306,7 +302,6 @@ def agregar_rut_ensayo(request, ensayo_id):
 
         # Validar que el RUT no esté vacío
         if not rut:
-            print("Rut no encontrado")
             messages.error(request, "El RUT no puede estar vacío.")
             return redirect('listado_ensayo_active')
 
@@ -318,10 +313,10 @@ def agregar_rut_ensayo(request, ensayo_id):
             # Obtener el ensayo por su _id
             ensayo = ensayos_collection.find_one({"_id": ObjectId(ensayo_id)})
             if not ensayo:
-                print("Ensayo no encontrado")  # Debug: Ensayo no encontrado
                 messages.error(request, "Ensayo no encontrado.")
                 return redirect('listado_ensayo_active')
-
+            if not usuario:
+                print("El usuario no existe en la base de datos")
             # Actualización en MongoDB
             result = ensayos_collection.update_one(
                 {"_id": ObjectId(ensayo_id)},
@@ -339,7 +334,6 @@ def agregar_rut_ensayo(request, ensayo_id):
 
         except User.DoesNotExist:
             # Si no existe el RUT en la base de datos de Django
-            print("El RUT no existe en el sistema")  # Debug: RUT no encontrado en Django
             messages.error(request, "El RUT no existe en el sistema.")
             return redirect('listado_ensayo_active')
 
