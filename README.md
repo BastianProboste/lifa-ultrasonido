@@ -27,7 +27,9 @@ Luego de creara el entorno installar los requeriments.txt de esta manera:
 
 De esta misma manera se instala requirements2.txt
 
+Luego es PostgreSQL crear una Base de datos llamada "Live" y colocar en password su contraseña de usario de PostgreSQL.
 
+Por ultimo crearse un super usuario o usario para poder acceder al sitio Web.
 
 ## Requerimientos
 Software, bibliotecas o entornos necesarios para que funcione el proyecto (ejemplo: versiones de Python, Node.js, etc.).
