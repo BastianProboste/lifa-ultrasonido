@@ -33,6 +33,8 @@ De esta misma manera se instala requirements2.txt
 Software, bibliotecas o entornos necesarios para que funcione el proyecto (ejemplo: versiones de Python, Node.js, etc.).
 Crear un entorno en conda con la version de python==3.6. Y luego instalar los requeriments que en estos se contiene todas las librerias ocupadas, para hacer funcionar este proyecto en cualquier computador.
 Para este software se utilizo la version de python-slugify==6.1.1
+## Motor de base de datos utilizado
+Para este proyecto utilizamos como motor de BD  PostgreSQL para la pagina WEB para almacenar a los usuarios que se vayan creando con su respectiva informacion y rol.
 
 ## Soporte visual
 
