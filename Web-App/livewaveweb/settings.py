@@ -100,9 +100,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'Live',
         'USER': 'postgres',
-        'PASSWORD': 'benja',
+        'PASSWORD': 'benja', #contraseña que debe cambiar por su contraseña de usuario postgres
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '5432', #puerto en el cual instalo PostgresSQL
     }
 }
 
