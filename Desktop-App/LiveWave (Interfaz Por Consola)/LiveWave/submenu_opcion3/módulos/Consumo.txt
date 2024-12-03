@@ -1,0 +1,11 @@
+10 minutos: 10 minutos = 10 × 60 = 600 segundos 10 minutos=10×60=600 segundos Consumo en 10 minutos = 40 KB/s × 600 segundos = 24 , 000 KB = 24 MB 
+Consumo en 10 minutos=40 KB/s×600 segundos=24,000 KB=24 MB 
+2. 30 minutos: 30 minutos = 30 × 60 = 1 , 800 segundos 30 minutos=30×60=1,800 segundos Consumo en 30 minutos = 40 KB/s × 1 , 800 segundos = 72 , 000 KB = 72 MB 
+Consumo en 30 minutos=40 KB/s×1,800 segundos=72,000 KB=72 MB 
+3. 1 hora: 1 hora = 60 × 60 = 3 , 600 segundos 1 hora=60×60=3,600 segundos Consumo en 1 hora = 40 KB/s × 3 , 600 segundos = 144 , 000 KB = 144 MB 
+Consumo en 1 hora=40 KB/s×3,600 segundos=144,000 KB=144 MB 
+4. 2 horas: 2 horas = 2 × 60 × 60 = 7 , 200 segundos 2 horas=2×60×60=7,200 segundos Consumo en 2 horas = 40 KB/s × 7 , 200 segundos = 288 
+, 000 KB = 288 MB Consumo en 2 horas=40 KB/s×7,200 segundos=288,000 KB=288 MB
+5. 10 horas 10 horas: 10 horas = 10 × 60 × 60 = 36 , 000 segundos 10 horas=10×60×60=36,000 segundos Consumo en 10 horas = 40 KB/s × 36 , 000 segundos
+ = 1 , 440 , 000 KB Consumo en 10 horas=40 KB/s×36,000 segundos=1,440,000 KB Ahora convertimos a MB (1 MB = 1,024 KB): 1 , 440 , 000 KB 1 , 024 ≈ 1 , 406.25 MB 1,024 1,440,000 KB ​ 
+≈1,406.25 MB

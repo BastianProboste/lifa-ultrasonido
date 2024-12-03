@@ -1,0 +1,22 @@
+def convertir_a_voltajes(muestras, rango_entrada, desplazamiento_dc, resolucion_adc, offset_muestra):
+    # Calcula los factores de escala y desplazamiento
+    scale_factor = rango_entrada / 2000  # Ajuste para rango de entrada en voltios
+    offset = desplazamiento_dc / 1000    # Desplazamiento DC en voltios
+
+    # Conversión de muestras digitales a voltajes
+    voltajes = [
+        (((offset_muestra - x) / resolucion_adc) * scale_factor) + offset
+        for x in muestras
+    ]
+
+    return voltajes
+
+# Ejemplo de uso
+muestras = [512, 1024, 1536, 2048]  # Datos en formato digital
+rango_entrada = 2000  # Rango de entrada en mV
+desplazamiento_dc = 500  # Desplazamiento DC en mV
+resolucion_adc = 4096  # Resolución del ADC
+offset_muestra = 2048  # Valor de referencia
+
+voltajes = convertir_a_voltajes(muestras, rango_entrada, desplazamiento_dc, resolucion_adc, offset_muestra)
+print(voltajes)
