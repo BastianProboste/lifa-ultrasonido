@@ -25,9 +25,10 @@ Luego de crear el entorno, instalar los requeriments.txt de esta manera, recuerd
 
 ![image](https://github.com/user-attachments/assets/ce1376c4-912c-44cc-97f8-099d5ec2d85b)
 
-Luego es PostgreSQL crear una Base de datos llamada "Live" y colocar en password su contraseña de usario de PostgreSQL.
+Luego es PostgreSQL crear una Base de datos llamada "Live" y colocar en password su contraseña de usuario de PostgreSQL.
 
-Por ultimo crearse un super usuario o usario para poder acceder al sitio Web.
+Por ultimo crearse un super usuario o usuario para poder acceder al sitio Web.
+Debe tener en cuenta
 
 ## Requerimientos
 Software, bibliotecas o entornos necesarios para que funcione el proyecto (ejemplo: versiones de Python, Node.js, etc.).
