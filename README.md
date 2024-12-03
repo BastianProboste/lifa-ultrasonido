@@ -25,16 +25,19 @@ Luego de crear el entorno, instalar los requeriments.txt de esta manera, recuerd
 
 ![image](https://github.com/user-attachments/assets/ce1376c4-912c-44cc-97f8-099d5ec2d85b)
 
-Luego es PostgreSQL crear una Base de datos llamada "Live" y colocar en password su contraseña de usario de PostgreSQL.
+Luego es PostgreSQL crear una Base de datos llamada "Live" y colocar en password su contraseña de usuario de PostgreSQL.
+Tmbien debe actualizar el archivo "settings.py" el cual esta en la siguiente ruta: C:\Users\Benja\OneDrive\Documentos\Consultoria-empresas\lifa-ultrasonido\Web-App\livewaveweb
+![image](https://github.com/user-attachments/assets/d2136e4c-4c36-45d8-9bb3-06f28664eb9d)
 
-Por ultimo crearse un super usuario o usario para poder acceder al sitio Web.
+Por ultimo crearse un super usuario o usuario para poder acceder al sitio Web. 
+Debe tener en cuenta
 
 ## Requerimientos
 Software, bibliotecas o entornos necesarios para que funcione el proyecto (ejemplo: versiones de Python, Node.js, etc.).
 Crear un entorno en conda con la version de python==3.6. Y luego instalar los requeriments que en estos se contiene todas las librerias ocupadas, para hacer funcionar este proyecto en cualquier computador.
 Para este software se utilizo la version de python-slugify==6.1.1
 ## Motor de base de datos utilizado
-Para este proyecto utilizamos como motor de BD  PostgreSQL para la pagina WEB para almacenar a los usuarios que se vayan creando con su respectiva informacion y rol.
+Para este proyecto utilizamos como motor de BD  PostgreSQL para la pagina WEB para almacenar a los usuarios que se vayan creando con su respectiva informacion y rol. Se recomienda la version de PostgreSQL==17.0 la cual se utilizo para el desarrollo de este proyecto
 
 ## Soporte visual
 
@@ -47,6 +50,16 @@ Esta imagen representa el login de la pagina web del proyecto, en la caul estara
 ![image](https://github.com/user-attachments/assets/669e6ad6-585b-438d-80bf-a672f9f392b9)
 
 ### Modulo de ensayo
+Este modulo esta implementado con MongoDB el cual para este proyecto no fue implementado pormotivos externos que escapan del alcance de este proyecto, el modulo esta hecho con esta base de datos NOSQL y quedaria desarrollado para implementaciones futuras
+![image](https://github.com/user-attachments/assets/d477f6f7-5038-4a08-96d4-a79c13fdd6ec)
+![image](https://github.com/user-attachments/assets/96c7a705-9ba8-47f2-a604-19c97f319483)
+Grafico generado a traves de datos incorporados en la base de datos, los cuales son simulados
+![image](https://github.com/user-attachments/assets/abe3d33a-1676-4e14-ba66-578f7254d7e2)
+![image](https://github.com/user-attachments/assets/7037b345-ba15-4b18-9cc0-ccb30e7aac67)
+![image](https://github.com/user-attachments/assets/7cc810c8-b699-4e22-a1c5-c21ff7fb8a83)
+
+
+
 
 
 
