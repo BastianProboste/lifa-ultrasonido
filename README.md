@@ -26,8 +26,10 @@ Luego de crear el entorno, instalar los requeriments.txt de esta manera, recuerd
 ![image](https://github.com/user-attachments/assets/ce1376c4-912c-44cc-97f8-099d5ec2d85b)
 
 Luego es PostgreSQL crear una Base de datos llamada "Live" y colocar en password su contraseña de usuario de PostgreSQL.
+Tmbien debe actualizar el archivo "settings.py" el cual esta en la siguiente ruta: C:\Users\Benja\OneDrive\Documentos\Consultoria-empresas\lifa-ultrasonido\Web-App\livewaveweb
+![image](https://github.com/user-attachments/assets/d2136e4c-4c36-45d8-9bb3-06f28664eb9d)
 
-Por ultimo crearse un super usuario o usuario para poder acceder al sitio Web.
+Por ultimo crearse un super usuario o usuario para poder acceder al sitio Web. 
 Debe tener en cuenta
 
 ## Requerimientos
@@ -35,7 +37,7 @@ Software, bibliotecas o entornos necesarios para que funcione el proyecto (ejemp
 Crear un entorno en conda con la version de python==3.6. Y luego instalar los requeriments que en estos se contiene todas las librerias ocupadas, para hacer funcionar este proyecto en cualquier computador.
 Para este software se utilizo la version de python-slugify==6.1.1
 ## Motor de base de datos utilizado
-Para este proyecto utilizamos como motor de BD  PostgreSQL para la pagina WEB para almacenar a los usuarios que se vayan creando con su respectiva informacion y rol.
+Para este proyecto utilizamos como motor de BD  PostgreSQL para la pagina WEB para almacenar a los usuarios que se vayan creando con su respectiva informacion y rol. Se recomienda la version de PostgreSQL==17.0 la cual se utilizo para el desarrollo de este proyecto
 
 ## Soporte visual
 
