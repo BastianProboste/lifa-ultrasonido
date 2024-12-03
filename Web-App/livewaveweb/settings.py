@@ -100,9 +100,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'Live',
         'USER': 'postgres',
-        'PASSWORD': 'benja0702',
+        'PASSWORD': 'benja',
         'HOST': 'localhost',
-        'PORT': '5433',
+        'PORT': '5432',
     }
 }
 
@@ -128,7 +128,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
@@ -150,7 +150,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 AUTH_USER_MODEL = 'user.User'
 
 # Rerección Login
-LOGIN_REDIRECT_URL = '/module'
+LOGIN_REDIRECT_URL = '/module/inicio'
 LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = '/'
 

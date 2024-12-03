@@ -57,7 +57,7 @@
                         {% endif %}
                     </select>
                 </div>
-                {% if user.is_staff %}
+                {% if usuario.is_staff %}
                     <div id="carreraField" style="display: none;">
                         <label for="carrera">Carrera</label>
                         <input class="form-input" name="carrera" type="text" placeholder="Carrera">
@@ -65,7 +65,7 @@
                 {% else %}
                     <div id="carreraField">
                         <label for="carrera">Carrera</label>
-                        <input class="form-input" value="{{usuario.carrera}}"name="carrera" type="text" placeholder="Carrera">
+                        <input class="form-input" value="{{ usuario.carrera }}"name="carrera" type="text" placeholder="Carrera">
                     </div>
                 {% endif %}
                 <div class="form-actions">

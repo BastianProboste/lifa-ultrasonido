@@ -15,7 +15,7 @@ ensayo_urlpatterns = [
     path('ensayo/grafico/<str:ensayo_id>', views.grafico, name='grafico'),
     path('ensayo/tiempos/detalle/<str:tiempo_id>/', views.detalle_tiempo, name='detalle_tiempo'),
     path('agregar-rut/<str:ensayo_id>/', views.agregar_rut_ensayo, name='agregar_rut_ensayo'),
-
+    path('detalles_usuario_rut/<str:rut>/', views.detalles_usuario_por_rut, name='detalles_usuario_por_rut'),
     
     ]
 

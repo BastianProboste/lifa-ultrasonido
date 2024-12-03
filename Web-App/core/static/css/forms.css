@@ -96,10 +96,23 @@ a.btn-back:hover {
     }
 
     fieldset {
-        grid-template-columns: 1fr; /* Hace que los campos se apilen verticalmente */
+        grid-template-columns: 1fr; 
     }
 
     .form-actions {
-        flex-direction: column; /* Alinea los botones verticalmente */
+        flex-direction: column; 
     }
 }
+
+
+
+
+.form-container input:focus {
+    border-color: #035bb9;  /* Borde azul cuando el campo tiene foco */
+    outline: none;
+}
+
+.form-container button:hover {
+    background-color: #0278b6; 
+}
+

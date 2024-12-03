@@ -85,9 +85,11 @@
                             <i class="fa-solid fa-eye"></i> 
                         </a>
                         &nbsp;
-                        <a href="#" onclick="confirmarCambio('{% url 'ensayo_activate' ensayo.id %}')" title="Activar" class="user-action">
-                            <i class="fas fa-ban"></i>
-                        </a>
+                        {% if user.is_staff %}
+                            <a href="#" onclick="confirmarCambio('{% url 'ensayo_activate' ensayo.id %}')" title="Activar" class="user-action">
+                                <i class="fas fa-ban"></i>
+                            </a>
+                        {% endif %}
                     </td>
 
 

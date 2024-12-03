@@ -79,12 +79,12 @@ def agregar_usuario(request):
         rut = request.POST.get('rut')
 
         # Validaciones del formulario
-        if User.objects.filter(email=correo).exists():
+        if User.objects.filter(email=correo, is_active=True).exists():
             messages.error(request, "Correo electrónico en uso")
             return render(request, 'usuarios/agregar_usuario.html', {'formulario': formulario})
         
         # Validaciones del formulario
-        if User.objects.filter(rut=rut).exists():
+        if User.objects.filter(rut=rut, is_active=True).exists():
             messages.error(request, "El rut ya esta en uso")
             return render(request, 'usuarios/agregar_usuario.html', {'formulario': formulario})
 
@@ -190,23 +190,27 @@ def editar_usuario(request, id):
             return redirect('editar_usuario', id=id)
         
         # Verificar si el nuevo nombre de usuario ya existe, excluyendo al usuario actual
-        if User.objects.filter(username=username).exclude(id=usuario.id).exists():
+        if User.objects.filter(username=username , is_active=True).exclude(id=usuario.id).exists():
             messages.error(request, 'El nombre de usuario ya está en uso.')
             return redirect('editar_usuario', id=id)
         
         # Verificar si el nuevo nombre de usuario ya existe, excluyendo al usuario actual
-        if User.objects.filter(rut=rut).exclude(id=usuario.id).exists():
+        if User.objects.filter(rut=rut , is_active=True).exclude(id=usuario.id).exists():
             messages.error(request, 'El rut ya esta en uso')
             return redirect('editar_usuario', id=id)
         
         # Verificar si el nuevo correo ya existe, excluyendo al usuario actual
-        if User.objects.filter(email=email).exclude(id=usuario.id).exists():
+        if User.objects.filter(email=email , is_active=True).exclude(id=usuario.id).exists():
             messages.error(request, "Correo electrónico en uso")
             return redirect('editar_usuario', id=id)
         
         # Validación de rut
         if not validar_rut(rut):
             messages.error(request, "El rut no ha sido ingresado correctamente, recuerde: sin puntos y con guion")
+            return redirect('editar_usuario', id=id)
+        
+        if not validar_numCelular(telefono):
+            messages.error(request, "El número de teléfono ingresado no es valido")
             return redirect('editar_usuario', id=id)
         
         # Validar que los campos no estén vacíos

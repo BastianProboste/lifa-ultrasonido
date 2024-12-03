@@ -16,78 +16,48 @@ function confirmDelete() {
         }
       });
 }
-/*
-$(document).ready(function() {
-            // Filtro por texto
-            $("#buscador").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $(".table-row").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                });
-            });
 
-            // Filtro por rol
-            $("#rolBuscador").on("change", function() {
-                var rolValue = $(this).val(); // Obtener el valor seleccionado
-                $(".table-row").filter(function() {
-                    var rowText = $(this).children("td").eq(5).text().trim(); // Asumiendo que el rol está en la sexta columna
-                    if (rolValue === "") {
-                        $(this).show(); // Mostrar todas las filas si no hay selección
-                    } else {
-                        $(this).toggle(rowText === rolValue); // Comparar con el valor del selector
-                    }
-                });
-            });
-        });
-
-*/
-function showUserDetails(userId) {
+function mostrarDetallesUsuario(userId) {
     $.ajax({
-        url: `/module/user_detail/${userId}`,
+        url: `/module/detalles_usuario/${userId}/`,  // Asumimos que este es el URL correcto para la vista 'detalles_usuario'
         type: 'GET',
-        success: function(data) {
-            // Datos en modal
-            document.getElementById("modalUserName").textContent = data.username;
-            document.getElementById("modalFirstName").textContent = data.first_name;
-            document.getElementById("modalLastName").textContent = data.last_name;
-            document.getElementById("modalEmail").textContent = data.email;
-            document.getElementById("modalRut").textContent = data.rut;
-            document.getElementById("modalRol").textContent = data.rol;
-            document.getElementById("modalPhone").textContent = data.phone;
+        success: function(datos) {
+            // Llenar los datos en el modal
+            document.getElementById("modalUserName").textContent = datos.username;
+            document.getElementById("modalFirstName").textContent = datos.first_name;
+            document.getElementById("modalLastName").textContent = datos.last_name;
+            document.getElementById("modalEmail").textContent = datos.email;
+            document.getElementById("modalRut").textContent = datos.rut;
+            document.getElementById("modalRol").textContent = datos.rol;
+            document.getElementById("modalTelefono").textContent = datos.telefono;
 
-            // Mostrar el campo de carrera solo al ser staff (Docente)
+            // Mostrar el campo de carrera solo si el usuario es un estudiante
             var carreraField = document.getElementById("modalCarrera");
             var carreraValue = document.getElementById("modalCarreraValue");
-            if (data.rol === "Estudiante") {
-                carreraField.style.display = 'block'; 
-                carreraValue.textContent = data.carrera;
+            if (datos.rol === "Estudiante") {
+                carreraField.style.display = 'block';
+                carreraValue.textContent = datos.carrera;
             } else {
                 carreraField.style.display = 'none'; // Ocultar carrera si es Docente
             }
 
             // Mostrar el modal
-            document.getElementById("userDetailsModal").style.display = "flex";
+            document.getElementById("detallesUsuarioModal").style.display = "flex";
         },
-
-        // Alerta por si existe error
         error: function() {
             alert("Error al cargar los datos del usuario.");
         }
     });
 }
 
-
-// Cierra el modal
-function closeModal() {
-    document.getElementById("userDetailsModal").style.display = "none";
+function cerrar_Modal() {
+    document.getElementById("detallesUsuarioModal").style.display = "none";
 }
 
-// Cierra el modal al hacer clic fuera de él
+// Cerrar el modal al hacer clic fuera de él
 window.onclick = function(event) {
-    const modal = document.getElementById("userDetailsModal");
-    if (event.target == modal) {
+    const modal = document.getElementById("detallesUsuarioModal");
+    if (event.target === modal) {
         modal.style.display = "none";
     }
 };
-
-

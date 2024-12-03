@@ -1,0 +1,29 @@
+{% extends 'core/module.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+<div class="container">
+    <h3>Cambiar Contraseña</h3>
+    {% include 'core/messages.html' %}
+    <form action="{% url 'cambiar_contraseña_usuario' %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+
+            <div>
+                <label for="username">Contraseña actual</label>
+                <input class="form-input" name="old_password" type="password" required>
+            </div>
+
+            <div>
+                <label for="username">Nueva Contraseña</label>
+                <input class="form-input" name="new_password1" type="password" required>
+            </div>
+
+            <div>
+                <label for="username">Confirmar nueva Contraseña</label>
+                <input class="form-input" name="new_password2" type="password" required>
+            </div>
+            <button type="submit" class="submit">Cambiar Contraseña</button>
+        </fieldset>
+{% endblock %}
