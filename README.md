@@ -21,11 +21,9 @@ Para crear un entorno en conda es de esta manera:
 
 ![image](https://github.com/user-attachments/assets/cf8c89ee-c585-4e1b-8158-7343f917c6e4)
 
-Luego de creara el entorno installar los requeriments.txt de esta manera:
+Luego de crear el entorno, instalar los requeriments.txt de esta manera, recuerde que debe estar en la ruta especificada del requirement:
 
 ![image](https://github.com/user-attachments/assets/ce1376c4-912c-44cc-97f8-099d5ec2d85b)
-
-De esta misma manera se instala requirements2.txt
 
 Luego es PostgreSQL crear una Base de datos llamada "Live" y colocar en password su contraseña de usario de PostgreSQL.
 
