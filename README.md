@@ -64,7 +64,7 @@ Grafico generado a traves de datos incorporados en la base de datos, los cuales 
 
 
 ### Interfaz GUI
-Estas imagen corresponderan al diseño de la interfaz GUI la cual se abrira desde el sescritorio del computador del laboratorio.
+Estas imagen corresponderan al diseño de la interfaz GUI la cual se abrira desde el sescritorio del computador del laboratorio. (Esta era el diseño de la interfaz, pero al final debido al tiempo, tambien priorizando más la felocidad del programa y que el computador del lab no soportaba la GUI)
 
 ### Ensayo
 
@@ -122,10 +122,7 @@ En este diagrama de flujo se mostrara las conexiones que hay entre los equipos.
 
 
 
-## Uso
 
-
-Instrucciones sobre cómo utilizar el proyecto
 
 
 
