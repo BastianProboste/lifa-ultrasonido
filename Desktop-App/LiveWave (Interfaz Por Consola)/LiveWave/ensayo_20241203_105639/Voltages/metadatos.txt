@@ -1,0 +1,10 @@
+Duración: 0.109707 segundos
+SampleRate: 125000000
+Depth: 8000
+Mode: 8
+TriggerTimeout: 10000000
+SegmentSize: 8000
+TriggerHoldoff: 2000
+TriggerDelay: 0
+ChannelConfig: {'InputRange': 10000, 'Impedance': 50, 'Coupling': 1, 'DcOffset': 0}
+TriggerConfig: {'Level': 2, 'Source': 1, 'ExtCoupling': 1, 'ExtRange': 2000}

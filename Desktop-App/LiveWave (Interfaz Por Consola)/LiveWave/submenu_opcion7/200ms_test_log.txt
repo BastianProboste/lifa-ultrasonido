@@ -1,0 +1,20 @@
+Log de prueba 200ms iniciado: 2024-11-27 18:06:15.550156
+==================================================
+Tiempo requerido: 200ms | Tiempo real: 206.46ms
+Tiempo requerido: 200ms | Tiempo real: 203.37ms
+Tiempo requerido: 200ms | Tiempo real: 201.42ms
+Tiempo requerido: 200ms | Tiempo real: 203.70ms
+Tiempo requerido: 200ms | Tiempo real: 204.93ms
+Tiempo requerido: 200ms | Tiempo real: 201.17ms
+Tiempo requerido: 200ms | Tiempo real: 204.41ms
+Tiempo requerido: 200ms | Tiempo real: 202.79ms
+Tiempo requerido: 200ms | Tiempo real: 200.43ms
+Tiempo requerido: 200ms | Tiempo real: 202.46ms
+Tiempo requerido: 200ms | Tiempo real: 200.96ms
+Tiempo requerido: 200ms | Tiempo real: 203.11ms
+Tiempo requerido: 200ms | Tiempo real: 202.23ms
+Tiempo requerido: 200ms | Tiempo real: 201.81ms
+Tiempo requerido: 200ms | Tiempo real: 204.49ms
+Tiempo requerido: 200ms | Tiempo real: 200.48ms
+Tiempo requerido: 200ms | Tiempo real: 203.30ms
+Tiempo requerido: 200ms | Tiempo real: 203.96ms

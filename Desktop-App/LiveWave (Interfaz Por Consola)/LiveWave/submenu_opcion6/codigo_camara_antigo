@@ -1,0 +1,41 @@
+import pixelinkWrapper as pxl  # Asegúrate de tener el SDK de Pixelink instalado.
+
+def main():
+    # Inicializar la cámara
+    camera = pxl.PxLApi()
+    
+    # Conectar la cámara
+    ret = camera.connect(0)  # El índice 0 selecciona la primera cámara detectada
+    if pxl.apiSuccess(ret[0]):
+        print("Cámara conectada.")
+    else:
+        print("Error al conectar con la cámara.")
+        return
+
+    # Configurar el trigger
+    ret = camera.setTriggerMode(pxl.TriggerMode.HARDWARE)
+    if pxl.apiSuccess(ret[0]):
+        print("Modo trigger configurado.")
+    else:
+        print("Error al configurar el modo trigger.")
+        camera.disconnect()
+        return
+
+    # Capturar una imagen cuando se recibe un trigger
+    print("Esperando trigger...")
+    ret = camera.getNextFrame(timeout=10000)  # Espera hasta 10 segundos
+    if pxl.apiSuccess(ret[0]):
+        frame_data = ret[1]  # Datos del frame capturado
+        print("Imagen capturada.")
+        # Guardar la imagen (opcional)
+        with open("imagen_capturada.raw", "wb") as f:
+            f.write(frame_data)
+    else:
+        print("No se recibió ningún trigger o falló la captura.")
+
+    # Desconectar la cámara
+    camera.disconnect()
+    print("Cámara desconectada.")
+
+if __name__ == "__main__":
+    main()
