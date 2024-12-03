@@ -14,17 +14,19 @@
     </h1>
     
     <div class="button-container">
-        <a href="{% url 'lista_de_usuarios' %}" class="custom-button">
-            <i class="icon fa fa-users"></i>
-            <span>Lista de Usuarios</span>
-        </a>
+        {% if user.is_staff %}
+            <a href="{% url 'lista_de_usuarios' %}" class="custom-button">
+                <i class="icon fa fa-users"></i>
+                <span>Lista de Usuarios</span>
+            </a>
+        {% endif %}
         <a href="{% url 'listado_ensayo_active' %}" class="custom-button">
             <i class="icon fa fa-list-alt"></i>
             <span>Lista de Ensayos</span>
         </a>
         <a href="{% url 'cambiar_contraseña_usuario' %}" class="custom-button">
             <i class="icon fa fa-cog"></i>
-            <span>Configuración</span>
+            <span>Configuración de Contraseña</span>
         </a>
     </div>
 

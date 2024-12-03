@@ -209,6 +209,10 @@ def editar_usuario(request, id):
             messages.error(request, "El rut no ha sido ingresado correctamente, recuerde: sin puntos y con guion")
             return redirect('editar_usuario', id=id)
         
+        if not validar_numCelular(telefono):
+            messages.error(request, "El número de teléfono ingresado no es valido")
+            return redirect('editar_usuario', id=id)
+        
         # Validar que los campos no estén vacíos
         if not username or not first_name or not last_name or not rut or not email:
             messages.error(request, 'Ningún campo debe estar en blanco.')
