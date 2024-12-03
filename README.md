@@ -50,6 +50,16 @@ Esta imagen representa el login de la pagina web del proyecto, en la caul estara
 ![image](https://github.com/user-attachments/assets/669e6ad6-585b-438d-80bf-a672f9f392b9)
 
 ### Modulo de ensayo
+Este modulo esta implementado con MongoDB el cual para este proyecto no fue implementado pormotivos externos que escapan del alcance de este proyecto, el modulo esta hecho con esta base de datos NOSQL y quedaria desarrollado para implementaciones futuras
+![image](https://github.com/user-attachments/assets/d477f6f7-5038-4a08-96d4-a79c13fdd6ec)
+![image](https://github.com/user-attachments/assets/96c7a705-9ba8-47f2-a604-19c97f319483)
+Grafico generado a traves de datos incorporados en la base de datos, los cuales son simulados
+![image](https://github.com/user-attachments/assets/abe3d33a-1676-4e14-ba66-578f7254d7e2)
+![image](https://github.com/user-attachments/assets/7037b345-ba15-4b18-9cc0-ccb30e7aac67)
+![image](https://github.com/user-attachments/assets/7cc810c8-b699-4e22-a1c5-c21ff7fb8a83)
+
+
+
 
 
 
